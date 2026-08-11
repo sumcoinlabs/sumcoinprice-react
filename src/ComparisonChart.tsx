@@ -154,7 +154,7 @@ export default function ComparisonChart() {
     useRef<IChartApi | null>(null)
 
   const [range, setRange] =
-    useState<ComparisonRange>('5y')
+    useState<ComparisonRange>('all')
 
   const [result, setResult] =
     useState<ComparisonResponse | null>(null)
