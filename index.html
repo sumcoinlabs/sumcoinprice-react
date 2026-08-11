@@ -12,12 +12,17 @@
 
     <meta
       name="description"
-      content="Explore the Sumcoin Index Rate, historical SUM performance, network resources, wallet, marketplace and peer-to-peer Sumcoin ecosystem."
+      content="Live Sumcoin price, historical SUM charts, market data, Bitcoin and precious-metal comparisons, dollar purchasing-power analysis, wallet access, blockchain explorer and Sumcoin ecosystem information."
     />
 
     <meta
-      name="theme-color"
-      content="#080a0f"
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
+
+    <link
+      rel="canonical"
+      href="https://sumcoinprice.com/app/"
     />
 
     <link
@@ -30,13 +35,131 @@
       rel="apple-touch-icon"
       href="/app/sumcoin-logo.png"
     />
+
+    <meta
+      property="og:type"
+      content="website"
+    />
+
+    <meta
+      property="og:site_name"
+      content="SumcoinPrice"
+    />
+
+    <meta
+      property="og:title"
+      content="Sumcoin Price | SUM Index, History & Network"
+    />
+
+    <meta
+      property="og:description"
+      content="Live Sumcoin price, historical charts, market data, purchasing-power comparisons and access to the Sumcoin ecosystem."
+    />
+
+    <meta
+      property="og:url"
+      content="https://sumcoinprice.com/app/"
+    />
+
+    <meta
+      property="og:image"
+      content="https://sumcoin.org/wp-content/uploads/2019/07/sumcoin_400x400.png"
+    />
+
+    <meta
+      property="og:image:alt"
+      content="Sumcoin logo"
+    />
+
+    <meta
+      name="twitter:card"
+      content="summary_large_image"
+    />
+
+    <meta
+      name="twitter:title"
+      content="Sumcoin Price | SUM Index, History & Network"
+    />
+
+    <meta
+      name="twitter:description"
+      content="Live SUM price, historical market data and long-term performance comparisons."
+    />
+
+    <meta
+      name="twitter:image"
+      content="https://sumcoin.org/wp-content/uploads/2019/07/sumcoin_400x400.png"
+    />
+
+    <meta
+      name="theme-color"
+      content="#090d13"
+    />
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://sumcoinprice.com/app/#website",
+          "url": "https://sumcoinprice.com/app/",
+          "name": "SumcoinPrice",
+          "description": "Live Sumcoin price, historical SUM market data and Sumcoin ecosystem information.",
+          "publisher": {
+            "@id": "https://sumcoinprice.com/app/#organization"
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://sumcoinprice.com/app/#organization",
+          "name": "Sumcoin",
+          "url": "https://sumcoin.org/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://sumcoin.org/wp-content/uploads/2019/07/sumcoin_400x400.png"
+          },
+          "sameAs": [
+            "https://github.com/sumcoinlabs",
+            "https://sumcoinwallet.org/",
+            "https://sumexplorer.com/",
+            "https://sumcoinmarketplace.com/"
+          ]
+        },
+        {
+          "@type": "Dataset",
+          "@id": "https://sumcoinprice.com/app/#sumcoin-market-data",
+          "name": "Sumcoin Market Data",
+          "description": "Current and historical Sumcoin price, index, market capitalization, supply and market activity data.",
+          "url": "https://sumcoinprice.com/app/",
+          "creator": {
+            "@id": "https://sumcoinprice.com/app/#organization"
+          },
+          "license": "https://sumcoin.org/",
+          "variableMeasured": [
+            "SUM price in USD",
+            "SUM market capitalization",
+            "SUM circulating supply",
+            "SUM maximum supply",
+            "SUM 24-hour volume",
+            "Historical SUM/USD price",
+            "Historical SUM/BTC price"
+          ]
+        }
+      ]
+    }
+    </script>
+
   </head>
 
   <body>
+
     <div id="root"></div>
+
     <script
       type="module"
       src="/src/main.tsx"
     ></script>
+
   </body>
 </html>

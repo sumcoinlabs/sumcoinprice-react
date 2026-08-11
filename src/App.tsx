@@ -20,6 +20,7 @@ import {
 } from 'lightweight-charts'
 
 import './App.css'
+import MarketSnapshot from './MarketSnapshot'
 import ComparisonChart from './ComparisonChart'
 
 
@@ -2838,7 +2839,9 @@ function App() {
         </section>
 
 
-        <ComparisonChart />
+        <MarketSnapshot />
+
+      <ComparisonChart />
 
 
 <section className="section resource-section">
