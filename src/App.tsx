@@ -2780,108 +2780,7 @@ function App() {
       <ComparisonChart />
 
 
-<section className="section resource-section">
-
-          <div className="section-heading">
-
-            <div>
-
-              <span className="eyebrow">
-                RESOURCES
-              </span>
-
-              <h2>
-                Explore Sumcoin
-              </h2>
-
-            </div>
-
-          </div>
-
-
-
-          <div className="resource-links">
-
-            <a
-              href="https://www.sumcoin.org/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Sumcoin.org
-              <span>↗</span>
-            </a>
-
-            <a
-              href="https://sumcoinwallet.org/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Wallet
-              <span>↗</span>
-            </a>
-
-            <a
-              href="https://sumexplorer.com/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Explorer
-              <span>↗</span>
-            </a>
-
-            <a
-              href="https://sumcoinmarketplace.com/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Marketplace
-              <span>↗</span>
-            </a>
-
-            <a
-              href="https://www.sumcoinindex.com/white-paper.html"
-              target="_blank"
-              rel="noreferrer"
-            >
-              White Paper
-              <span>↗</span>
-            </a>
-
-            <a
-              href="https://cryptocurrency.fandom.com/wiki/Sumcoin"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Fandom Wiki
-              <span>↗</span>
-            </a>
-
-            <a
-              href="https://github.com/sumcoinlabs"
-              target="_blank"
-              rel="noreferrer"
-            >
-              GitHub
-              <span>↗</span>
-            </a>
-
-            <a
-              href="/app/api/history.php?range=1d"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Price API
-              <span>↗</span>
-            </a>
-
-          </div>
-
-
-        </section>
-
-
-        
-        <section className="section calculator-section">
+<section className="section calculator-section">
 
           <div className="section-heading">
 
@@ -3050,7 +2949,107 @@ function App() {
         </section>
 
 
-        <footer className="site-footer">
+<section className="section resource-section">
+
+          <div className="section-heading">
+
+            <div>
+
+              <span className="eyebrow">
+                RESOURCES
+              </span>
+
+              <h2>
+                Explore Sumcoin
+              </h2>
+
+            </div>
+
+          </div>
+
+
+
+          <div className="resource-links">
+
+            <a
+              href="https://www.sumcoin.org/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Sumcoin.org
+              <span>↗</span>
+            </a>
+
+            <a
+              href="https://sumcoinwallet.org/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Wallet
+              <span>↗</span>
+            </a>
+
+            <a
+              href="https://sumexplorer.com/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Explorer
+              <span>↗</span>
+            </a>
+
+            <a
+              href="https://sumcoinmarketplace.com/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Marketplace
+              <span>↗</span>
+            </a>
+
+            <a
+              href="https://www.sumcoinindex.com/white-paper.html"
+              target="_blank"
+              rel="noreferrer"
+            >
+              White Paper
+              <span>↗</span>
+            </a>
+
+            <a
+              href="https://cryptocurrency.fandom.com/wiki/Sumcoin"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Fandom Wiki
+              <span>↗</span>
+            </a>
+
+            <a
+              href="https://github.com/sumcoinlabs"
+              target="_blank"
+              rel="noreferrer"
+            >
+              GitHub
+              <span>↗</span>
+            </a>
+
+            <a
+              href="/app/api/history.php?range=1d"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Price API
+              <span>↗</span>
+            </a>
+
+          </div>
+
+
+        </section>
+
+
+<footer className="site-footer">
 
           <div className="footer-brand">
 
