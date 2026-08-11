@@ -4052,3 +4052,19 @@ footer {
   }
 
 }
+
+
+/* Sumcoin Wallet ecosystem icon */
+
+.ecosystem-icon-wallet {
+  overflow: hidden;
+  padding: 0;
+}
+
+.ecosystem-icon-wallet img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: inherit;
+}

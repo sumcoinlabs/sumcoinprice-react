@@ -2685,8 +2685,11 @@ function App() {
               className="ecosystem-card"
             >
 
-              <div className="ecosystem-icon">
-                ◈
+              <div className="ecosystem-icon ecosystem-icon-wallet">
+                <img
+                  src="/app/sumcoin-wallet-logo.webp"
+                  alt="Sumcoin Wallet"
+                />
               </div>
 
               <span className="eyebrow">
