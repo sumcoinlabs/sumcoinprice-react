@@ -3490,3 +3490,565 @@ footer {
   }
 
 }
+
+
+/* ==========================================================
+   LATEST PRICE PULSE
+   Subtle Robinhood-style live endpoint animation
+   ========================================================== */
+
+.chart-wrap {
+  position: relative;
+}
+
+
+.latest-price-pulse {
+  position: absolute;
+
+  width: 10px;
+  height: 10px;
+
+  z-index: 8;
+
+  pointer-events: none;
+
+  transform:
+    translate(-50%, -50%);
+}
+
+
+.latest-price-pulse-core,
+.latest-price-pulse-ring {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  border-radius: 999px;
+
+  transform:
+    translate(-50%, -50%);
+}
+
+
+.latest-price-pulse-core {
+  width: 7px;
+  height: 7px;
+
+  background:
+    var(--latest-price-color);
+
+  box-shadow:
+    0 0 5px
+      var(--latest-price-color),
+    0 0 10px
+      var(--latest-price-glow);
+}
+
+
+.latest-price-pulse-ring {
+  width: 8px;
+  height: 8px;
+
+  border:
+    1.5px solid
+    var(--latest-price-color);
+
+  background:
+    var(--latest-price-glow);
+
+  animation:
+    sumcoin-latest-price-pulse
+    2.8s
+    ease-out
+    infinite;
+}
+
+
+.latest-price-pulse-up {
+  --latest-price-color:
+    #14d981;
+
+  --latest-price-glow:
+    rgba(20,217,129,.42);
+}
+
+
+.latest-price-pulse-down {
+  --latest-price-color:
+    #ff5364;
+
+  --latest-price-glow:
+    rgba(255,83,100,.42);
+}
+
+
+@keyframes sumcoin-latest-price-pulse {
+
+  0% {
+    width: 7px;
+    height: 7px;
+
+    opacity: .90;
+
+    box-shadow:
+      0 0 3px
+      var(--latest-price-glow);
+  }
+
+
+  45% {
+    opacity: .40;
+  }
+
+
+  100% {
+    width: 25px;
+    height: 25px;
+
+    opacity: 0;
+
+    box-shadow:
+      0 0 15px
+      var(--latest-price-glow);
+  }
+
+}
+
+
+/*
+ * Accessibility:
+ * keep the current-price dot visible,
+ * but stop the repeating animation when
+ * reduced motion is requested.
+ */
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
+
+  .latest-price-pulse-ring {
+    animation: none;
+
+    width: 14px;
+    height: 14px;
+
+    opacity: .22;
+  }
+
+}
+
+
+/* ==========================================================
+   LATEST PRICE PULSE REFINEMENT
+   Smoother + slightly larger
+   ========================================================== */
+
+.latest-price-pulse {
+  width: 12px;
+  height: 12px;
+}
+
+
+.latest-price-pulse-core {
+  width: 9px;
+  height: 9px;
+
+  box-shadow:
+    0 0 6px
+      var(--latest-price-color),
+    0 0 12px
+      var(--latest-price-glow);
+}
+
+
+.latest-price-pulse-ring {
+  width: 10px;
+  height: 10px;
+
+  border-width: 1px;
+
+  background:
+    transparent;
+
+  animation:
+    sumcoin-latest-price-pulse-smooth
+    3.6s
+    cubic-bezier(.22,.61,.36,1)
+    infinite;
+}
+
+
+@keyframes sumcoin-latest-price-pulse-smooth {
+
+  0% {
+    transform:
+      translate(-50%, -50%)
+      scale(.85);
+
+    opacity: .40;
+  }
+
+
+  35% {
+    opacity: .26;
+  }
+
+
+  70% {
+    opacity: .10;
+  }
+
+
+  100% {
+    transform:
+      translate(-50%, -50%)
+      scale(2.4);
+
+    opacity: 0;
+  }
+
+}
+
+
+/* Mobile: slower and softer so it doesn't look like a flash */
+
+@media (max-width: 600px) {
+
+  .latest-price-pulse {
+    width: 13px;
+    height: 13px;
+  }
+
+
+  .latest-price-pulse-core {
+    width: 10px;
+    height: 10px;
+
+    box-shadow:
+      0 0 5px
+        var(--latest-price-color),
+      0 0 9px
+        var(--latest-price-glow);
+  }
+
+
+  .latest-price-pulse-ring {
+    width: 11px;
+    height: 11px;
+
+    opacity: .28;
+
+    animation-duration:
+      4.4s;
+  }
+
+}
+
+
+/* Reduced motion */
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
+
+  .latest-price-pulse-ring {
+    animation: none;
+
+    width: 16px;
+    height: 16px;
+
+    opacity: .18;
+  }
+
+}
+
+
+/* ==========================================================
+   LATEST PRICE PULSE — FINAL POLISH
+   Layered live-market beacon
+   ========================================================== */
+
+.latest-price-pulse {
+  width: 14px;
+  height: 14px;
+
+  filter:
+    drop-shadow(
+      0 0 3px
+      var(--latest-price-glow)
+    );
+}
+
+
+/* ----------------------------------------------------------
+   Core dot
+   ---------------------------------------------------------- */
+
+.latest-price-pulse-core {
+  width: 10px;
+  height: 10px;
+
+  background:
+    var(--latest-price-color);
+
+  box-shadow:
+    0 0 5px
+      var(--latest-price-color),
+    0 0 10px
+      var(--latest-price-glow),
+    0 0 18px
+      var(--latest-price-glow);
+
+  animation:
+    sumcoin-price-core-breathe
+    2.8s
+    ease-in-out
+    infinite;
+}
+
+
+/* ----------------------------------------------------------
+   Primary expanding halo
+   ---------------------------------------------------------- */
+
+.latest-price-pulse-ring {
+  width: 11px;
+  height: 11px;
+
+  border:
+    1px solid
+    var(--latest-price-color);
+
+  background:
+    transparent;
+
+  opacity: .28;
+
+  animation:
+    sumcoin-price-ring-primary
+    4.2s
+    cubic-bezier(.16,.72,.28,1)
+    infinite;
+}
+
+
+/* ----------------------------------------------------------
+   Secondary delayed halo
+   ---------------------------------------------------------- */
+
+.latest-price-pulse::after {
+  content: '';
+
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 10px;
+  height: 10px;
+
+  border-radius: 999px;
+
+  border:
+    1px solid
+    var(--latest-price-color);
+
+  transform:
+    translate(-50%, -50%)
+    scale(.9);
+
+  opacity: 0;
+
+  animation:
+    sumcoin-price-ring-secondary
+    4.2s
+    cubic-bezier(.16,.72,.28,1)
+    infinite;
+
+  animation-delay:
+    1.8s;
+}
+
+
+/* ----------------------------------------------------------
+   Core breathing
+   ---------------------------------------------------------- */
+
+@keyframes sumcoin-price-core-breathe {
+
+  0%,
+  100% {
+    transform:
+      translate(-50%, -50%)
+      scale(1);
+
+    opacity: .92;
+
+    box-shadow:
+      0 0 4px
+        var(--latest-price-color),
+      0 0 9px
+        var(--latest-price-glow);
+  }
+
+
+  50% {
+    transform:
+      translate(-50%, -50%)
+      scale(1.14);
+
+    opacity: 1;
+
+    box-shadow:
+      0 0 7px
+        var(--latest-price-color),
+      0 0 15px
+        var(--latest-price-glow),
+      0 0 22px
+        var(--latest-price-glow);
+  }
+
+}
+
+
+/* ----------------------------------------------------------
+   Primary ring
+   ---------------------------------------------------------- */
+
+@keyframes sumcoin-price-ring-primary {
+
+  0% {
+    transform:
+      translate(-50%, -50%)
+      scale(.9);
+
+    opacity: .30;
+  }
+
+
+  30% {
+    opacity: .20;
+  }
+
+
+  70% {
+    opacity: .07;
+  }
+
+
+  100% {
+    transform:
+      translate(-50%, -50%)
+      scale(2.8);
+
+    opacity: 0;
+  }
+
+}
+
+
+/* ----------------------------------------------------------
+   Delayed ring
+   ---------------------------------------------------------- */
+
+@keyframes sumcoin-price-ring-secondary {
+
+  0% {
+    transform:
+      translate(-50%, -50%)
+      scale(.9);
+
+    opacity: .18;
+  }
+
+
+  35% {
+    opacity: .10;
+  }
+
+
+  100% {
+    transform:
+      translate(-50%, -50%)
+      scale(2.2);
+
+    opacity: 0;
+  }
+
+}
+
+
+/* ----------------------------------------------------------
+   Mobile tuning
+   ---------------------------------------------------------- */
+
+@media (max-width: 600px) {
+
+  .latest-price-pulse {
+    width: 14px;
+    height: 14px;
+
+    filter:
+      drop-shadow(
+        0 0 2px
+        var(--latest-price-glow)
+      );
+  }
+
+
+  .latest-price-pulse-core {
+    width: 10px;
+    height: 10px;
+
+    animation-duration:
+      3.4s;
+  }
+
+
+  .latest-price-pulse-ring {
+    animation-duration:
+      5s;
+
+    opacity: .22;
+  }
+
+
+  .latest-price-pulse::after {
+    animation-duration:
+      5s;
+
+    animation-delay:
+      2.15s;
+
+    border-width:
+      1px;
+  }
+
+}
+
+
+/* ----------------------------------------------------------
+   Reduced motion
+   ---------------------------------------------------------- */
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
+
+  .latest-price-pulse-core {
+    animation: none;
+  }
+
+
+  .latest-price-pulse-ring,
+  .latest-price-pulse::after {
+    animation: none;
+
+    opacity: .12;
+  }
+
+}
