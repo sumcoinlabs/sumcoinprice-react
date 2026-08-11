@@ -453,7 +453,7 @@ function App() {
     useState<number | null>(null)
 
   const [calculatorAmount, setCalculatorAmount] =
-    useState('10')
+    useState('1')
 
   const [calculatorDate, setCalculatorDate] =
     useState('')
@@ -596,16 +596,13 @@ function App() {
             !calculatorDate &&
             map.all.data.length
           ) {
-            const oneYearAgo =
-              new Date()
-
-            oneYearAgo.setFullYear(
-              oneYearAgo.getFullYear() -
-                1
-            )
+            const firstPoint =
+              map.all.data[0]
 
             setCalculatorDate(
-              oneYearAgo
+              new Date(
+                firstPoint.time * 1000
+              )
                 .toISOString()
                 .slice(0, 10)
             )
@@ -1580,6 +1577,85 @@ function App() {
   }
 
 
+  function latestPriceCoordinates() {
+    /*
+     * trendVersion intentionally forces this
+     * coordinate calculation to run again after
+     * zooming, panning, fitting, or resizing.
+     */
+    void trendVersion
+
+    const chart =
+      chartRef.current
+
+    const series =
+      seriesRef.current
+
+    if (
+      !chart ||
+      !series ||
+      !result ||
+      !result.data.length ||
+      !chartContainer.current
+    ) {
+      return null
+    }
+
+    const point =
+      result.data[
+        result.data.length - 1
+      ]
+
+    const x =
+      chart
+        .timeScale()
+        .timeToCoordinate(
+          point.time as UTCTimestamp
+        )
+
+    const y =
+      series.priceToCoordinate(
+        point.close
+      )
+
+    if (
+      x === null ||
+      y === null
+    ) {
+      return null
+    }
+
+    /*
+     * Do not display the pulse if the latest
+     * price has been panned outside the visible
+     * chart area.
+     */
+    const width =
+      chartContainer.current.clientWidth
+
+    const height =
+      chartContainer.current.clientHeight
+
+    if (
+      x < 0 ||
+      x > width ||
+      y < 0 ||
+      y > height
+    ) {
+      return null
+    }
+
+    return {
+      x,
+      y,
+    }
+  }
+
+
+  const latestPricePoint =
+    latestPriceCoordinates()
+
+
   const displayPrice =
     hoverPrice !== null
       ? hoverPrice
@@ -2098,6 +2174,33 @@ function App() {
             />
 
 
+            {latestPricePoint &&
+              !loading &&
+              !error && (
+
+                <div
+                  className={`latest-price-pulse ${
+                    result &&
+                    result.period.change >= 0
+                      ? 'latest-price-pulse-up'
+                      : 'latest-price-pulse-down'
+                  }`}
+                  style={{
+                    left:
+                      `${latestPricePoint.x}px`,
+
+                    top:
+                      `${latestPricePoint.y}px`,
+                  }}
+                  aria-hidden="true"
+                >
+                  <span className="latest-price-pulse-ring" />
+                  <span className="latest-price-pulse-core" />
+                </div>
+
+              )}
+
+
             <svg
               className="trend-overlay"
             >
@@ -2407,176 +2510,6 @@ function App() {
         </section>
 
 
-        <section className="section calculator-section">
-
-          <div className="section-heading">
-
-            <div>
-
-              <span className="eyebrow">
-                HISTORICAL VALUE
-              </span>
-
-              <h2>
-                If you held SUM…
-              </h2>
-
-              <p>
-                See the historical index value of a SUM holding and compare it with today.
-              </p>
-
-            </div>
-
-          </div>
-
-
-          <div className="calculator-card">
-
-            <div className="calculator-inputs">
-
-              <label>
-
-                SUM amount
-
-                <input
-                  type="number"
-                  min="0"
-                  step="1"
-                  value={
-                    calculatorAmount
-                  }
-                  onChange={(e) =>
-                    setCalculatorAmount(
-                      e.target.value
-                    )
-                  }
-                />
-
-              </label>
-
-
-              <label>
-
-                Starting date
-
-                <input
-                  type="date"
-                  min={
-                    firstHistoryDate
-                  }
-                  max={
-                    today
-                  }
-                  value={
-                    calculatorDate
-                  }
-                  onChange={(e) =>
-                    setCalculatorDate(
-                      e.target.value
-                    )
-                  }
-                />
-
-              </label>
-
-            </div>
-
-
-            {calculator && (
-
-              <div className="calculator-results">
-
-                <div>
-
-                  <span>
-                    Historical date
-                  </span>
-
-                  <strong>
-                    {
-                      formatShortDate(
-                        calculator
-                          .point.time
-                      )
-                    }
-                  </strong>
-
-                </div>
-
-
-                <div>
-
-                  <span>
-                    Value then
-                  </span>
-
-                  <strong>
-                    {
-                      formatPrice(
-                        calculator
-                          .thenValue,
-                        pair
-                      )
-                    }
-                  </strong>
-
-                </div>
-
-
-                <div>
-
-                  <span>
-                    Value now
-                  </span>
-
-                  <strong>
-                    {
-                      formatPrice(
-                        calculator
-                          .nowValue,
-                        pair
-                      )
-                    }
-                  </strong>
-
-                </div>
-
-
-                <div>
-
-                  <span>
-                    Change
-                  </span>
-
-                  <strong
-                    className={
-                      calculator
-                        .change >=
-                      0
-                        ? 'up'
-                        : 'down'
-                    }
-                  >
-                    {
-                      formatPercent(
-                        calculator
-                          .change
-                      )
-                    }
-                  </strong>
-
-                </div>
-
-              </div>
-
-            )}
-
-          </div>
-
-        </section>
-
-
-        
         <section className="section philosophy-section" id="why">
 
           <div className="philosophy-hero">
@@ -2945,6 +2878,175 @@ function App() {
 
 
         
+        <section className="section calculator-section">
+
+          <div className="section-heading">
+
+            <div>
+
+              <span className="eyebrow">
+                HISTORICAL VALUE
+              </span>
+
+              <h2>
+                If you held SUM…
+              </h2>
+
+              <p>
+                See the historical index value of a SUM holding and compare it with today.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div className="calculator-card">
+
+            <div className="calculator-inputs">
+
+              <label>
+
+                SUM amount
+
+                <input
+                  type="number"
+                  min="0"
+                  step="1"
+                  value={
+                    calculatorAmount
+                  }
+                  onChange={(e) =>
+                    setCalculatorAmount(
+                      e.target.value
+                    )
+                  }
+                />
+
+              </label>
+
+
+              <label>
+
+                Starting date
+
+                <input
+                  type="date"
+                  min={
+                    firstHistoryDate
+                  }
+                  max={
+                    today
+                  }
+                  value={
+                    calculatorDate
+                  }
+                  onChange={(e) =>
+                    setCalculatorDate(
+                      e.target.value
+                    )
+                  }
+                />
+
+              </label>
+
+            </div>
+
+
+            {calculator && (
+
+              <div className="calculator-results">
+
+                <div>
+
+                  <span>
+                    Historical date
+                  </span>
+
+                  <strong>
+                    {
+                      formatShortDate(
+                        calculator
+                          .point.time
+                      )
+                    }
+                  </strong>
+
+                </div>
+
+
+                <div>
+
+                  <span>
+                    Value then
+                  </span>
+
+                  <strong>
+                    {
+                      formatPrice(
+                        calculator
+                          .thenValue,
+                        pair
+                      )
+                    }
+                  </strong>
+
+                </div>
+
+
+                <div>
+
+                  <span>
+                    Value now
+                  </span>
+
+                  <strong>
+                    {
+                      formatPrice(
+                        calculator
+                          .nowValue,
+                        pair
+                      )
+                    }
+                  </strong>
+
+                </div>
+
+
+                <div>
+
+                  <span>
+                    Change
+                  </span>
+
+                  <strong
+                    className={
+                      calculator
+                        .change >=
+                      0
+                        ? 'up'
+                        : 'down'
+                    }
+                  >
+                    {
+                      formatPercent(
+                        calculator
+                          .change
+                      )
+                    }
+                  </strong>
+
+                </div>
+
+              </div>
+
+            )}
+
+          </div>
+
+        </section>
+
+
         <footer className="site-footer">
 
           <div className="footer-brand">
