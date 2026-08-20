@@ -295,6 +295,32 @@ await fs.rename(
   htmlPath
 )
 
+const sitemap =
+  `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://sumcoinprice.com/app/</loc>
+    <lastmod>${new Date().toISOString()}</lastmod>
+  </url>
+</urlset>
+`
+
+await fs.writeFile(
+  path.join(root, 'public', 'sitemap.xml'),
+  sitemap,
+  'utf8'
+)
+
+await fs.writeFile(
+  path.join(root, 'dist', 'sitemap.xml'),
+  sitemap,
+  'utf8'
+)
+
+console.log(
+  'Updated sitemap.xml with current lastmod'
+)
+
 console.log(
   'Prerendered React markup into dist/index.html'
 )
