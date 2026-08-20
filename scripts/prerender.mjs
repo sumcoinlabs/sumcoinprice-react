@@ -295,13 +295,43 @@ await fs.rename(
   htmlPath
 )
 
+const sitemapTimestamp =
+  new Date().toISOString()
+
 const sitemap =
   `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<?xml-stylesheet type="text/css" href="https://www.xml-sitemaps.com/css/sitemap.css"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <url>
+    <loc>https://sumcoinprice.com/</loc>
+    <lastmod>${sitemapTimestamp}</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.9000</priority>
+  </url>
+
   <url>
     <loc>https://sumcoinprice.com/app/</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
+    <lastmod>${sitemapTimestamp}</lastmod>
+    <changefreq>always</changefreq>
+    <priority>1.0000</priority>
   </url>
+
+  <url>
+    <loc>https://sumcoinprice.com/sumbtc/</loc>
+    <lastmod>${sitemapTimestamp}</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.9000</priority>
+  </url>
+
+  <url>
+    <loc>https://sumcoinprice.com/sum-usdt/</loc>
+    <lastmod>${sitemapTimestamp}</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.9000</priority>
+  </url>
+
 </urlset>
 `
 
@@ -318,7 +348,7 @@ await fs.writeFile(
 )
 
 console.log(
-  'Updated sitemap.xml with current lastmod'
+  'Updated sitemap.xml with all public pages'
 )
 
 console.log(
