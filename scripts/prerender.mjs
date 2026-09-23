@@ -26,7 +26,7 @@ const serverModule =
   )
 
 const appHtml =
-  serverModule.render()
+  serverModule.render('/')
 
 const rootMarker =
   '<div id="root"></div>'
@@ -303,13 +303,6 @@ const sitemap =
 <?xml-stylesheet type="text/css" href="https://www.xml-sitemaps.com/css/sitemap.css"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
-
-  <url>
-    <loc>https://sumcoinprice.com/</loc>
-    <lastmod>${sitemapTimestamp}</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.9000</priority>
-  </url>
 
   <url>
     <loc>https://sumcoinprice.com/</loc>

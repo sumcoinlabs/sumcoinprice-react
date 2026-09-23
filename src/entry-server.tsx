@@ -1,11 +1,11 @@
 import { StrictMode } from 'react'
 import { renderToString } from 'react-dom/server'
-import App from './App'
+import Router from './Router'
 
-export function render() {
+export function render(pathname = '/') {
   return renderToString(
     <StrictMode>
-      <App />
+      <Router pathname={pathname} />
     </StrictMode>
   )
 }
