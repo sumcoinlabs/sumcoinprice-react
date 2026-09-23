@@ -182,27 +182,46 @@ function createBlankTemplate(
   const start =
     html.indexOf(rootOpen)
 
-  const moduleScript =
-    html.lastIndexOf(
-      '<script type="module"'
-    )
-
-  if (
-    start < 0 ||
-    moduleScript < 0
-  ) {
+  if (start < 0) {
     throw new Error(
       'Could not locate prerendered root'
     )
   }
 
-  const end =
-    html.lastIndexOf(
-      '</div>',
-      moduleScript
-    )
+  /*
+   * Find the matching closing </div> for #root.
+   * Do not rely on the Vite module script position,
+   * because Vite places production scripts in <head>.
+   */
+  const tokenRegex =
+    /<div\b[^>]*>|<\/div>/gi
 
-  if (end < start) {
+  tokenRegex.lastIndex = start
+
+  let depth = 0
+  let end = -1
+  let match
+
+  while (
+    (match = tokenRegex.exec(html)) !== null
+  ) {
+    if (
+      match[0]
+        .toLowerCase()
+        .startsWith('<div')
+    ) {
+      depth += 1
+    } else {
+      depth -= 1
+
+      if (depth === 0) {
+        end = tokenRegex.lastIndex
+        break
+      }
+    }
+  }
+
+  if (end < 0) {
     throw new Error(
       'Could not locate end of prerendered root'
     )
@@ -211,7 +230,7 @@ function createBlankTemplate(
   return (
     html.slice(0, start) +
     '<div id="root"></div>' +
-    html.slice(end + 6)
+    html.slice(end)
   )
 }
 
