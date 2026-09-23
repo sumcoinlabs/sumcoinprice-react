@@ -206,6 +206,146 @@ function stripLiveMarketJsonLd(
   )
 }
 
+function extractMarketState(
+  html
+) {
+  const match =
+    html.match(
+      /<script id="sumcoin-market-state" type="application\/json">([\s\S]*?)<\/script>/i
+    )
+
+  if (!match) {
+    return null
+  }
+
+  try {
+    return JSON.parse(
+      match[1]
+    )
+  } catch {
+    return null
+  }
+}
+
+function formatPrice(value) {
+  if (
+    !Number.isFinite(
+      Number(value)
+    )
+  ) {
+    return null
+  }
+
+  return `$${Number(
+    value
+  ).toLocaleString(
+    'en-US',
+    {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }
+  )}`
+}
+
+function seoForPage(
+  page,
+  market
+) {
+  const price =
+    formatPrice(
+      market?.price
+    )
+
+  const btcRatio =
+    Number.isFinite(
+      Number(
+        market?.btc_ratio
+      )
+    )
+      ? Number(
+          market.btc_ratio
+        ).toFixed(8)
+      : null
+
+  if (!price) {
+    return {
+      title:
+        page.title,
+      description:
+        page.description,
+    }
+  }
+
+  switch (page.path) {
+    case '/index/':
+      return {
+        title:
+          `Sumcoin Index Price: ${price} | How SUM Works`,
+        description:
+          `The current Sumcoin Index price is ${price} USD. Learn how SUM reference pricing works and view live market cap, volume and supply data.`,
+      }
+
+    case '/history/':
+      return {
+        title:
+          `Sumcoin Price History | SUM ${price} Today`,
+        description:
+          `Sumcoin (SUM) is ${price} USD today. Explore SUM price history, SUM/BTC performance, market cycles and long-term comparisons.`,
+      }
+
+    case '/buy/':
+      return {
+        title:
+          `How to Buy Sumcoin (SUM) | Price ${price}`,
+        description:
+          `Sumcoin (SUM) is ${price} USD today. Learn how to get SUM, review official acquisition resources and move Sumcoin to a self-custody wallet.`,
+      }
+
+    case '/calculator/':
+      return {
+        title:
+          `Sumcoin Calculator: 1 SUM = ${price} | SUM to USD`,
+        description:
+          `1 Sumcoin (SUM) is ${price} USD at the current Sumcoin Index rate. Convert any amount of SUM to U.S. dollars with the live calculator.`,
+      }
+
+    case '/sumcoin-vs-bitcoin/':
+      return {
+        title:
+          `Sumcoin vs Bitcoin | SUM ${price} Today`,
+        description:
+          btcRatio
+            ? `Sumcoin (SUM) is ${price} USD and ${btcRatio} BTC today. Compare SUM with Bitcoin using live and historical market data.`
+            : `Sumcoin (SUM) is ${price} USD today. Compare SUM with Bitcoin using live and historical market data.`,
+      }
+
+    case '/about/':
+      return {
+        title:
+          page.title,
+        description:
+          `Sumcoin (SUM) is ${price} USD today. Learn what Sumcoin is, how indexed value works, and how SUM supports peer-to-peer transfer and self-custody.`,
+      }
+
+    case '/ecosystem/':
+      return {
+        title:
+          page.title,
+        description:
+          `Sumcoin (SUM) is ${price} USD today. Explore the Sumcoin wallet, blockchain explorer, network, marketplace and live market-data ecosystem.`,
+      }
+
+    default:
+      return {
+        title:
+          page.title,
+        description:
+          page.description,
+      }
+  }
+}
+
+
 function createBlankTemplate(
   html
 ) {
@@ -270,6 +410,11 @@ function createBlankTemplate(
 const buildTimestamp =
   new Date().toISOString()
 
+const market =
+  extractMarketState(
+    homepageHtml
+  )
+
 let template =
   createBlankTemplate(
     homepageHtml
@@ -286,6 +431,12 @@ const rootMarker =
 for (const page of pages) {
   const url =
     `https://sumcoinprice.com${page.path}`
+
+  const seo =
+    seoForPage(
+      page,
+      market
+    )
 
   const pageId =
     `${url}#webpage`
@@ -356,12 +507,13 @@ for (const page of pages) {
         url,
 
         name:
-          page.title,
+          seo.title,
 
         description:
-          page.description,
+          seo.description,
 
         dateModified:
+          market?.updated_at ||
           buildTimestamp,
 
         isPartOf: {
@@ -418,18 +570,120 @@ for (const page of pages) {
     ],
   }
 
+  if (market) {
+    schema['@graph'].push(
+      {
+        '@type':
+          'ExchangeRateSpecification',
+
+        '@id':
+          `${url}#sum-usd-rate`,
+
+        name:
+          'Sumcoin to U.S. Dollar Reference Rate',
+
+        currency:
+          'SUM',
+
+        currentExchangeRate: {
+          '@type':
+            'UnitPriceSpecification',
+
+          price:
+            Number(
+              market.price
+            ),
+
+          priceCurrency:
+            'USD',
+        },
+      },
+
+      {
+        '@type':
+          'Dataset',
+
+        '@id':
+          `${url}#sumcoin-live-market-data`,
+
+        name:
+          'Sumcoin Live Market Data',
+
+        description:
+          seo.description,
+
+        url,
+
+        dateModified:
+          market.updated_at ||
+          buildTimestamp,
+
+        variableMeasured: [
+          {
+            '@type':
+              'PropertyValue',
+
+            name:
+              'SUM price in USD',
+
+            value:
+              Number(
+                market.price
+              ),
+
+            unitText:
+              'USD',
+          },
+
+          {
+            '@type':
+              'PropertyValue',
+
+            name:
+              'Market capitalization',
+
+            value:
+              Number(
+                market.market_cap
+              ),
+
+            unitText:
+              'USD',
+          },
+
+          {
+            '@type':
+              'PropertyValue',
+
+            name:
+              '24-hour volume',
+
+            value:
+              Number(
+                market.volume_24h
+              ),
+
+            unitText:
+              'USD',
+          },
+        ],
+      }
+    )
+  }
+
   let output =
     template.replace(
       rootMarker,
       `<div id="root">${serverModule.render(
-        page.path
+        page.path,
+        market
       )}</div>`
     )
 
   output =
     replaceTitle(
       output,
-      page.title
+      seo.title
     )
 
   output =
@@ -437,7 +691,7 @@ for (const page of pages) {
       output,
       'name',
       'description',
-      page.description
+      seo.description
     )
 
   output =
@@ -445,7 +699,7 @@ for (const page of pages) {
       output,
       'property',
       'og:title',
-      page.title
+      seo.title
     )
 
   output =
@@ -453,7 +707,7 @@ for (const page of pages) {
       output,
       'property',
       'og:description',
-      page.description
+      seo.description
     )
 
   output =
@@ -469,7 +723,7 @@ for (const page of pages) {
       output,
       'name',
       'twitter:title',
-      page.title
+      seo.title
     )
 
   output =
@@ -477,7 +731,7 @@ for (const page of pages) {
       output,
       'name',
       'twitter:description',
-      page.description
+      seo.description
     )
 
   output =

@@ -1,18 +1,48 @@
 import {
+  createContext,
+  useContext,
   useEffect,
   useState,
+  type ReactNode,
 } from 'react'
 
 import './MarketTools.css'
 
-type MarketData = {
+export type MarketData = {
   price: number
   market_cap: number
   volume_24h: number
   circulating_supply: number
   max_supply: number
   updated_at?: string
+  btc_ratio?: number
 }
+
+const MarketDataContext =
+  createContext<MarketData | null>(null)
+
+export function MarketDataProvider({
+  initialMarket,
+  children,
+}: {
+  initialMarket: MarketData | null
+  children: ReactNode
+}) {
+  return (
+    <MarketDataContext.Provider
+      value={initialMarket}
+    >
+      {children}
+    </MarketDataContext.Provider>
+  )
+}
+
+export function useInitialMarketData() {
+  return useContext(
+    MarketDataContext
+  )
+}
+
 
 type HistoryResponse = {
   success: boolean
@@ -61,8 +91,13 @@ function formatCompact(
 }
 
 export function useMarketData() {
+  const initialMarket =
+    useInitialMarketData()
+
   const [market, setMarket] =
-    useState<MarketData | null>(null)
+    useState<MarketData | null>(
+      initialMarket
+    )
 
   const [error, setError] =
     useState(false)
@@ -285,8 +320,13 @@ export function SumCalculator() {
 }
 
 export function SumBtcSnapshot() {
+  const initialMarket =
+    useInitialMarketData()
+
   const [ratio, setRatio] =
-    useState<number | null>(null)
+    useState<number | null>(
+      initialMarket?.btc_ratio ?? null
+    )
 
   const [error, setError] =
     useState(false)

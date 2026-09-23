@@ -5,7 +5,11 @@ import { pathToFileURL } from 'node:url'
 const root = process.cwd()
 
 const htmlPath =
-  path.join(root, 'dist', 'index.html')
+  path.join(
+    root,
+    'dist',
+    'index.html'
+  )
 
 const serverEntry =
   path.join(
@@ -25,15 +29,118 @@ const serverModule =
     pathToFileURL(serverEntry).href
   )
 
+let market = null
+
+try {
+  const marketResponse =
+    await fetch(
+      'https://sumcoinprice.com/market.php',
+      {
+        headers: {
+          'User-Agent':
+            'SumcoinPrice-Prerender/2.0',
+        },
+      }
+    )
+
+  if (!marketResponse.ok) {
+    throw new Error(
+      `Market endpoint HTTP ${marketResponse.status}`
+    )
+  }
+
+  const json =
+    await marketResponse.json()
+
+  if (
+    !json.success ||
+    !Number.isFinite(
+      Number(json.price)
+    )
+  ) {
+    throw new Error(
+      'Invalid market data'
+    )
+  }
+
+  market = {
+    ...json,
+    price:
+      Number(json.price),
+    market_cap:
+      Number(
+        json.market_cap
+      ) || 0,
+    volume_24h:
+      Number(
+        json.volume_24h
+      ) || 0,
+    circulating_supply:
+      Number(
+        json.circulating_supply
+      ) || 0,
+    max_supply:
+      Number(
+        json.max_supply
+      ) || 0,
+  }
+
+  try {
+    const btcResponse =
+      await fetch(
+        'https://sumcoinprice.com/api/history.php?range=1d&pair=btc',
+        {
+          headers: {
+            'User-Agent':
+              'SumcoinPrice-Prerender/2.0',
+          },
+        }
+      )
+
+    if (btcResponse.ok) {
+      const btc =
+        await btcResponse.json()
+
+      const ratio =
+        Number(
+          btc.latest?.price
+        )
+
+      if (
+        btc.success &&
+        Number.isFinite(ratio)
+      ) {
+        market.btc_ratio =
+          ratio
+      }
+    }
+  } catch {
+    // SUM/USD market data is
+    // still usable without BTC.
+  }
+
+  console.log(
+    `Fetched SUM market data: $${market.price.toFixed(2)}`
+  )
+} catch (error) {
+  console.warn(
+    'Market prerender unavailable:',
+    error.message
+  )
+}
+
 const appHtml =
-  serverModule.render('/')
+  serverModule.render(
+    '/',
+    market
+  )
 
 const rootMarker =
   '<div id="root"></div>'
 
 if (!html.includes(rootMarker)) {
   throw new Error(
-    'Could not find empty #root in dist/index.html'
+    'Could not find empty #root'
   )
 }
 
@@ -43,80 +150,128 @@ let output =
     `<div id="root">${appHtml}</div>`
   )
 
+function escapeAttribute(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('"', '&quot;')
+}
 
-/*
- * Fetch current Sumcoin market data so the
- * initial HTML response contains the same
- * live market information Google would
- * otherwise only see after JavaScript runs.
- */
+function replaceTitle(
+  source,
+  value
+) {
+  return source.replace(
+    /<title>[\s\S]*?<\/title>/i,
+    `<title>${value}</title>`
+  )
+}
 
-let market = null
+function replaceMeta(
+  source,
+  attribute,
+  key,
+  value
+) {
+  const regex =
+    new RegExp(
+      `<meta\\b[^>]*${attribute}="${key}"[^>]*>`,
+      'i'
+    )
 
-try {
+  if (!regex.test(source)) {
+    return source
+  }
 
-  const response =
-    await fetch(
-      'https://sumcoinprice.com/market.php',
+  return source.replace(
+    regex,
+    (tag) =>
+      tag.replace(
+        /content="[^"]*"/i,
+        `content="${escapeAttribute(value)}"`
+      )
+  )
+}
+
+if (market) {
+  const priceText =
+    market.price.toLocaleString(
+      'en-US',
       {
-        headers: {
-          'User-Agent':
-            'SumcoinPrice-Prerender/1.0',
-        },
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
       }
     )
 
-  if (!response.ok) {
-    throw new Error(
-      `Market endpoint HTTP ${response.status}`
+  const displayPrice =
+    `$${priceText}`
+
+  const title =
+    `Sumcoin Price Today: ${displayPrice} | Live SUM Index`
+
+  const description =
+    `Sumcoin (SUM) price today is ${displayPrice} USD. View the live Sumcoin Index, historical SUM charts, market cap, supply, volume and network data.`
+
+  output =
+    replaceTitle(
+      output,
+      title
     )
+
+  for (const [
+    attribute,
+    key,
+    value,
+  ] of [
+    [
+      'name',
+      'description',
+      description,
+    ],
+    [
+      'property',
+      'og:title',
+      title,
+    ],
+    [
+      'property',
+      'og:description',
+      description,
+    ],
+    [
+      'name',
+      'twitter:title',
+      title,
+    ],
+    [
+      'name',
+      'twitter:description',
+      description,
+    ],
+  ]) {
+    output =
+      replaceMeta(
+        output,
+        attribute,
+        key,
+        value
+      )
   }
 
-  const json =
-    await response.json()
+  const stateJson =
+    JSON.stringify(market)
+      .replaceAll(
+        '<',
+        '\\u003c'
+      )
 
-  if (
-    !json.success ||
-    !Number.isFinite(
-      Number(json.price)
-    )
-  ) {
-    throw new Error(
-      'Invalid market data returned'
-    )
-  }
-
-  market = json
-
-  console.log(
-    `Fetched SUM market data: $${Number(
-      market.price
-    ).toFixed(2)}`
-  )
-
-} catch (error) {
-
-  console.warn(
-    'Market JSON-LD not injected:',
-    error.message
-  )
-
-}
-
-
-/*
- * Inject live market JSON-LD into <head>.
- */
-
-if (market) {
+  const stateTag =
+    `<script id="sumcoin-market-state" type="application/json">${stateJson}</script>`
 
   const jsonLd = {
-
     '@context':
       'https://schema.org',
 
     '@graph': [
-
       {
         '@type':
           'ExchangeRateSpecification',
@@ -135,9 +290,7 @@ if (market) {
             'UnitPriceSpecification',
 
           price:
-            Number(
-              market.price
-            ),
+            market.price,
 
           priceCurrency:
             'USD',
@@ -152,10 +305,10 @@ if (market) {
           'https://sumcoinprice.com/#live-market-data',
 
         name:
-          'Sumcoin Live Market Data',
+          `Sumcoin Live Market Data - ${displayPrice}`,
 
         description:
-          'Current Sumcoin index price, market capitalization, volume and supply information.',
+          `Current Sumcoin index price is ${displayPrice} USD, with market capitalization, volume and supply data.`,
 
         url:
           'https://sumcoinprice.com/',
@@ -164,7 +317,6 @@ if (market) {
           market.updated_at,
 
         variableMeasured: [
-
           {
             '@type':
               'PropertyValue',
@@ -173,9 +325,7 @@ if (market) {
               'SUM price in USD',
 
             value:
-              Number(
-                market.price
-              ),
+              market.price,
 
             unitText:
               'USD',
@@ -189,9 +339,7 @@ if (market) {
               'Market capitalization',
 
             value:
-              Number(
-                market.market_cap
-              ),
+              market.market_cap,
 
             unitText:
               'USD',
@@ -205,9 +353,7 @@ if (market) {
               '24-hour volume',
 
             value:
-              Number(
-                market.volume_24h
-              ),
+              market.volume_24h,
 
             unitText:
               'USD',
@@ -221,9 +367,7 @@ if (market) {
               'Circulating supply',
 
             value:
-              Number(
-                market.circulating_supply
-              ),
+              market.circulating_supply,
 
             unitText:
               'SUM',
@@ -237,49 +381,27 @@ if (market) {
               'Maximum supply',
 
             value:
-              Number(
-                market.max_supply
-              ),
+              market.max_supply,
 
             unitText:
               'SUM',
           },
-
-          {
-            '@type':
-              'PropertyValue',
-
-            name:
-              'Fully diluted market capitalization',
-
-            value:
-              Number(
-                market.fully_diluted_market_cap
-              ),
-
-            unitText:
-              'USD',
-          },
-
         ],
       },
-
     ],
-
   }
 
   const jsonLdTag =
-    `<script id="sumcoin-live-jsonld" type="application/ld+json">${JSON.stringify(
-      jsonLd
-    )}</script>`
+    `<script id="sumcoin-live-jsonld" type="application/ld+json">${JSON.stringify(jsonLd)}</script>`
 
   output =
     output.replace(
       '</head>',
-      `  ${jsonLdTag}\n</head>`
+      `  ${stateTag}
+  ${jsonLdTag}
+</head>`
     )
 }
-
 
 const tempPath =
   `${htmlPath}.tmp`
@@ -295,49 +417,6 @@ await fs.rename(
   htmlPath
 )
 
-const sitemapTimestamp =
-  new Date().toISOString()
-
-const sitemap =
-  `<?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/css" href="https://www.xml-sitemaps.com/css/sitemap.css"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
-
-  <url>
-    <loc>https://sumcoinprice.com/</loc>
-    <lastmod>${sitemapTimestamp}</lastmod>
-    <changefreq>always</changefreq>
-    <priority>1.0000</priority>
-  </url>
-
-  <url>
-    <loc>https://sumcoinprice.com/sumbtc/</loc>
-    <lastmod>${sitemapTimestamp}</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.9000</priority>
-  </url>
-
-  <url>
-    <loc>https://sumcoinprice.com/sum-usdt/</loc>
-    <lastmod>${sitemapTimestamp}</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.9000</priority>
-  </url>
-
-</urlset>
-`
-
-await fs.writeFile(
-  path.join(root, 'dist', 'sitemap.xml'),
-  sitemap,
-  'utf8'
-)
-
 console.log(
-  'Updated sitemap.xml with all public pages'
-)
-
-console.log(
-  'Prerendered React markup into dist/index.html'
+  'Prerendered homepage with live SUM market data'
 )

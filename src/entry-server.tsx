@@ -1,11 +1,25 @@
 import { StrictMode } from 'react'
 import { renderToString } from 'react-dom/server'
+
 import Router from './Router'
 
-export function render(pathname = '/') {
+import {
+  MarketDataProvider,
+  type MarketData,
+} from './MarketTools'
+
+export function render(
+  pathname = '/',
+  initialMarket:
+    MarketData | null = null
+) {
   return renderToString(
     <StrictMode>
-      <Router pathname={pathname} />
+      <MarketDataProvider
+        initialMarket={initialMarket}
+      >
+        <Router pathname={pathname} />
+      </MarketDataProvider>
     </StrictMode>
   )
 }

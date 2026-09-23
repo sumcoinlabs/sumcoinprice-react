@@ -1,4 +1,5 @@
 import './ContentPages.css'
+import { LiveMarketStrip } from './MarketTools'
 
 type NavItem = {
   href: string
@@ -241,6 +242,8 @@ export function IndexPage() {
       title="One reference value. Broader market context."
       lead="The Sumcoin Index provides the reference value used for SUM pricing. SumcoinPrice presents that value alongside historical market information so the current quote can be understood in context."
     >
+      <LiveMarketStrip />
+
       <div className="index-flow">
         <div className="flow-node">
           <span>01</span>
@@ -331,6 +334,8 @@ export function HistoryPage() {
       title="The current price is only one point in the story."
       lead="SumcoinPrice preserves historical SUM market data so today's index value can be compared with earlier periods, long-term performance and changes in purchasing power."
     >
+      <LiveMarketStrip />
+
       <div className="history-strip">
         <div>
           <span>PRICE</span>
