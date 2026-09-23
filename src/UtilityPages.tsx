@@ -72,23 +72,24 @@ export function BuyPage() {
 
           <div>
             <h2>
-              Choose the path
+              Review current Sumcoin
+              resources
             </h2>
 
             <p>
-              Depending on availability,
-              SUM may be acquired
-              peer-to-peer, through
-              supported decentralized
-              tools or through other
-              acquisition resources
-              listed by the official
-              Sumcoin project.
+              Sumcoin's current official
+              resources emphasize
+              wallet migration,
+              peer-to-peer use and the
+              Sumcoin Marketplace.
+              Availability of any
+              third-party buying method
+              can change over time.
             </p>
           </div>
 
-          <a href="https://www.sumcoin.org/exchange/">
-            Official resources →
+          <a href="https://www.sumcoin.org/migrations/">
+            Current official resources →
           </a>
         </article>
 
@@ -142,27 +143,28 @@ export function BuyPage() {
 
         <article className="buy-option">
           <span>
-            THIRD-PARTY OPTIONS
+            CURRENT SUMCOIN RESOURCES
           </span>
 
           <h2>
-            Review available exchange,
-            DEX or kiosk resources.
+            Use the paths that are
+            actually available today.
           </h2>
 
           <p>
-            Availability, spreads,
-            payment methods,
-            verification requirements
-            and fees can vary. Sumcoin's
-            official exchange page
-            links to known resources
-            but advises users to do
-            their own research.
+            Sumcoin's current official
+            page focuses on migration,
+            wallet setup and peer-to-peer
+            use. If an exchange, DEX,
+            kiosk or other third-party
+            option is available, verify
+            the provider, current fees
+            and withdrawal support
+            directly before using it.
           </p>
 
-          <a href="https://www.sumcoin.org/exchange/">
-            Review official links →
+          <a href="https://www.sumcoin.org/migrations/">
+            Review current Sumcoin resources →
           </a>
         </article>
       </div>

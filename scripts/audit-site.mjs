@@ -568,7 +568,7 @@ async function auditExternalLinks() {
     'https://sumexplorer.com/',
     'https://sumcoinmarketplace.com/',
     'https://www.sumcoin.org/',
-    'https://www.sumcoin.org/exchange/',
+    'https://www.sumcoin.org/migrations/',
   ]
 
   for (
