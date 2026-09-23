@@ -1876,6 +1876,26 @@ function App() {
           </p>
         </div>
 
+        <nav
+          className="homepage-tools"
+          aria-label="Popular Sumcoin tools"
+        >
+          <a href="/buy/">
+            <span>GET SUM</span>
+            <strong>How to Buy Sumcoin →</strong>
+          </a>
+
+          <a href="/calculator/">
+            <span>CONVERT SUM</span>
+            <strong>SUM to USD Calculator →</strong>
+          </a>
+
+          <a href="/sumcoin-vs-bitcoin/">
+            <span>COMPARE</span>
+            <strong>Sumcoin vs Bitcoin →</strong>
+          </a>
+        </nav>
+
         <section className="market-card" id="price">
 
           <div className="market-head">

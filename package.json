@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && vite build --ssr src/entry-server.tsx --outDir dist-server && node scripts/prerender.mjs && node scripts/prerender-pages.mjs",
+    "build": "tsc -b && vite build && node scripts/save-prerender-base.mjs && vite build --ssr src/entry-server.tsx --outDir dist-server && node scripts/prerender.mjs && node scripts/prerender-pages.mjs",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "refresh-live": "node scripts/refresh-live.mjs"
   },
   "dependencies": {
     "lightweight-charts": "^5.2.0",
