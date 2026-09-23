@@ -1,19 +1,11 @@
 .live-market-strip {
   display: grid;
   grid-template-columns:
-    repeat(4, 1fr);
-
-  margin:
-    0 0 92px;
-
-  border:
-    1px solid
-    var(--border);
-
+    1.3fr repeat(3, 1fr);
+  margin: 0 0 84px;
+  border: 1px solid var(--border);
   border-radius: 18px;
-
   overflow: hidden;
-
   background:
     linear-gradient(
       180deg,
@@ -24,12 +16,9 @@
 
 .live-market-strip > div {
   min-width: 0;
-
-  padding: 26px;
-
+  padding: 25px;
   border-right:
-    1px solid
-    var(--border);
+    1px solid var(--border);
 }
 
 .live-market-strip > div:last-child {
@@ -37,186 +26,262 @@
 }
 
 .live-market-strip span,
-.calculator-rate span,
-.btc-snapshot > span {
+.calculator-topline span,
+.btc-snapshot span,
+.history-snapshot span,
+.compare-stats span,
+.p2p-rate-label {
   display: block;
-
   color: var(--gold);
-
   font-size: 9px;
   font-weight: 850;
-
   letter-spacing: .17em;
 }
 
 .live-market-strip strong {
   display: block;
-
-  margin-top: 22px;
-
+  margin-top: 20px;
   font-size:
-    clamp(
-      19px,
-      2.2vw,
-      27px
-    );
-
+    clamp(18px,2vw,27px);
   letter-spacing: -.035em;
+}
+
+.live-market-primary {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(233,185,73,.09),
+      transparent
+    );
+}
+
+.live-market-primary strong {
+  font-size:
+    clamp(23px,2.8vw,34px);
 }
 
 .live-market-strip small {
   display: block;
-
   margin-top: 7px;
-
   color: var(--muted);
-
   font-size: 11px;
 }
 
-.calculator-panel {
-  margin:
-    0 0 92px;
-
-  padding: 34px;
-
-  border:
-    1px solid
+.p2p-rate-card {
+  position: relative;
+  max-width: 770px;
+  margin: 0 auto 88px;
+  padding: 46px;
+  text-align: center;
+  border: 1px solid
     var(--gold-border);
-
-  border-radius: 21px;
-
+  border-radius: 26px;
+  overflow: hidden;
   background:
+    radial-gradient(
+      circle at 50% 0,
+      rgba(233,185,73,.14),
+      transparent 56%
+    ),
+    rgba(255,255,255,.015);
+}
+
+.p2p-rate-card::before {
+  content: '';
+  position: absolute;
+  inset: 18px;
+  border: 1px solid
+    rgba(233,185,73,.08);
+  border-radius: 19px;
+  pointer-events: none;
+}
+
+.p2p-rate-card strong {
+  display: block;
+  margin: 17px 0 15px;
+  font-size:
+    clamp(45px,7vw,78px);
+  letter-spacing: -.06em;
+}
+
+.p2p-rate-card p {
+  max-width: 580px;
+  margin: 0 auto;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.p2p-rate-card a {
+  display: inline-block;
+  margin-top: 24px;
+  color: var(--gold);
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.calculator-panel {
+  margin: 0 auto 42px;
+  max-width: 1000px;
+  padding:
+    clamp(25px,5vw,48px);
+  border: 1px solid
+    var(--gold-border);
+  border-radius: 24px;
+  background:
+    radial-gradient(
+      circle at 0 0,
+      rgba(233,185,73,.14),
+      transparent 42%
+    ),
     linear-gradient(
       135deg,
-      rgba(233,185,73,.10),
-      rgba(255,255,255,.018)
+      rgba(255,255,255,.045),
+      rgba(255,255,255,.012)
     );
 }
 
-.calculator-rate strong {
+.calculator-topline {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 25px;
+}
+
+.calculator-topline strong {
   display: block;
-
-  margin-top: 12px;
-
+  margin-top: 10px;
   font-size:
-    clamp(
-      36px,
-      6vw,
-      62px
-    );
-
+    clamp(38px,6vw,67px);
   letter-spacing: -.055em;
 }
 
-.calculator-rate small {
+.calculator-topline small {
   color: var(--muted);
+}
+
+.calculator-live {
+  padding: 8px 10px;
+  color: #9ee6b8;
+  border:
+    1px solid rgba(89,205,126,.25);
+  background:
+    rgba(89,205,126,.07);
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: .12em;
 }
 
 .calculator-fields {
   display: grid;
-
   grid-template-columns:
     1fr auto 1fr;
-
   align-items: end;
-
   gap: 18px;
-
   margin-top: 42px;
 }
 
 .calculator-fields label > span {
   display: block;
-
   margin-bottom: 9px;
-
   color: var(--muted);
-
   font-size: 10px;
   font-weight: 800;
-
   letter-spacing: .13em;
 }
 
-.calculator-fields input,
-.calculator-output {
+.calculator-fields input {
+  box-sizing: border-box;
   width: 100%;
-  min-height: 62px;
-
+  min-height: 66px;
   padding: 0 17px;
-
   border:
-    1px solid
-    var(--border-strong);
-
+    1px solid var(--border-strong);
   border-radius: 12px;
-
+  outline: none;
   color: var(--text);
-
-  background:
-    rgba(0,0,0,.24);
-
+  background: rgba(0,0,0,.25);
+  font: inherit;
   font-size: 22px;
   font-weight: 750;
 }
 
-.calculator-output {
-  display: flex;
-  align-items: center;
+.calculator-fields input:focus {
+  border-color:
+    var(--gold-border);
+  box-shadow:
+    0 0 0 3px
+    rgba(233,185,73,.06);
 }
 
 .calculator-equals {
-  padding-bottom: 19px;
-
+  padding-bottom: 20px;
   color: var(--gold);
-
   font-size: 24px;
 }
 
 .calculator-note {
-  margin:
-    20px 0 0;
-
+  margin: 20px 0 0;
   color: var(--muted);
-
   font-size: 12px;
+  line-height: 1.65;
+}
+
+.rate-examples {
+  display: grid;
+  grid-template-columns:
+    repeat(4,1fr);
+  gap: 10px;
+  max-width: 1000px;
+  margin: 0 auto 88px;
+}
+
+.rate-examples > div {
+  padding: 20px;
+  border:
+    1px solid var(--border);
+  border-radius: 14px;
+  background:
+    rgba(255,255,255,.018);
+}
+
+.rate-examples span {
+  display: block;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.rate-examples strong {
+  display: block;
+  margin-top: 14px;
+  font-size: 19px;
 }
 
 .btc-snapshot {
-  margin:
-    0 0 92px;
-
-  padding:
-    44px 36px;
-
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 35px;
+  margin: 0 0 28px;
+  padding: 42px;
   border:
-    1px solid
-    var(--gold-border);
-
-  border-radius: 20px;
-
+    1px solid var(--gold-border);
+  border-radius: 22px;
   background:
-    radial-gradient(
-      circle at 100% 0,
-      rgba(233,185,73,.11),
-      transparent 42%
+    linear-gradient(
+      110deg,
+      rgba(233,185,73,.105),
+      transparent 48%
     ),
-    rgba(255,255,255,.018);
+    rgba(255,255,255,.015);
 }
 
 .btc-snapshot strong {
   display: block;
-
-  margin: 18px 0 8px;
-
+  margin: 16px 0 8px;
   font-size:
-    clamp(
-      35px,
-      6vw,
-      60px
-    );
-
+    clamp(35px,6vw,60px);
   letter-spacing: -.055em;
 }
 
@@ -224,136 +289,134 @@
   color: var(--muted);
 }
 
-.buy-paths,
-.compare-grid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(3, 1fr);
-
-  gap: 16px;
-
-  margin-bottom: 92px;
-}
-
-.buy-path,
-.compare-card {
-  padding: 30px;
-
-  border:
-    1px solid
-    var(--border);
-
-  border-radius: 18px;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,.035),
-      rgba(255,255,255,.012)
-    );
-}
-
-.buy-path span {
-  display: inline-flex;
-
-  margin-bottom: 36px;
-
-  color: var(--gold);
-
-  font-size: 11px;
+.btc-symbol {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(255,255,255,.19);
+  font-size:
+    clamp(25px,5vw,48px);
   font-weight: 900;
 }
 
-.buy-path h2,
-.compare-card h2 {
-  margin:
-    0 0 12px;
-
-  font-size: 22px;
-}
-
-.buy-path p,
-.compare-card p {
-  margin: 0;
-
-  color: var(--muted);
-
-  line-height: 1.72;
-}
-
-.buy-path a {
-  display: inline-block;
-
-  margin-top: 24px;
-
+.btc-symbol i {
   color: var(--gold);
-
-  text-decoration: none;
-
-  font-size: 12px;
-  font-weight: 800;
+  font-style: normal;
 }
 
-.compare-card strong {
+.history-snapshot {
+  display: grid;
+  grid-template-columns:
+    1.3fr repeat(3,1fr);
+  margin-bottom: 86px;
+  border:
+    1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  background:
+    rgba(255,255,255,.015);
+}
+
+.history-snapshot > div {
+  padding: 27px;
+  border-right:
+    1px solid var(--border);
+}
+
+.history-snapshot > div:last-child {
+  border-right: 0;
+}
+
+.history-snapshot strong {
   display: block;
+  margin-top: 25px;
+  font-size:
+    clamp(19px,2.5vw,29px);
+}
 
-  margin-bottom: 8px;
+.history-snapshot small {
+  display: block;
+  margin-top: 7px;
+  color: var(--muted);
+}
 
-  color: var(--gold);
+.history-stat-emphasis {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(111,139,211,.12),
+      transparent
+    );
+}
 
-  font-size: 10px;
+.compare-stats {
+  display: grid;
+  grid-template-columns:
+    repeat(3,1fr);
+  gap: 10px;
+  margin: 0 0 80px;
+}
 
-  letter-spacing: .14em;
+.compare-stats > div {
+  padding: 24px;
+  border:
+    1px solid var(--border);
+  border-radius: 15px;
+  background:
+    rgba(255,255,255,.016);
+}
+
+.compare-stats strong {
+  display: block;
+  margin-top: 19px;
+  font-size: 21px;
 }
 
 @media (max-width: 900px) {
-  .live-market-strip {
+  .live-market-strip,
+  .history-snapshot {
     grid-template-columns:
-      repeat(2, 1fr);
+      repeat(2,1fr);
   }
 
-  .live-market-strip > div:nth-child(2) {
-    border-right: 0;
-  }
-
-  .live-market-strip > div:nth-child(-n+2) {
+  .live-market-strip > div,
+  .history-snapshot > div {
     border-bottom:
-      1px solid
-      var(--border);
+      1px solid var(--border);
   }
 
-  .buy-paths,
-  .compare-grid {
-    grid-template-columns: 1fr;
+  .rate-examples {
+    grid-template-columns:
+      repeat(2,1fr);
   }
 }
 
 @media (max-width: 640px) {
-  .live-market-strip {
-    grid-template-columns: 1fr;
-  }
-
-  .live-market-strip > div {
-    border-right: 0;
-    border-bottom:
-      1px solid
-      var(--border);
-  }
-
-  .live-market-strip > div:last-child {
-    border-bottom: 0;
-  }
-
-  .calculator-panel {
-    padding: 24px;
-  }
-
+  .live-market-strip,
+  .history-snapshot,
+  .rate-examples,
+  .compare-stats,
   .calculator-fields {
     grid-template-columns: 1fr;
   }
 
+  .live-market-strip > div,
+  .history-snapshot > div {
+    border-right: 0;
+  }
+
   .calculator-equals {
     padding: 0;
+  }
+
+  .calculator-topline,
+  .btc-snapshot {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .p2p-rate-card,
+  .btc-snapshot {
+    padding: 28px 22px;
   }
 }

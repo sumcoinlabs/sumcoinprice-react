@@ -1,5 +1,10 @@
 import './ContentPages.css'
-import { LiveMarketStrip } from './MarketTools'
+
+import {
+  HistorySnapshot,
+  LiveMarketStrip,
+  P2PReferenceCard,
+} from './MarketTools'
 
 type NavItem = {
   href: string
@@ -7,19 +12,47 @@ type NavItem = {
 }
 
 const nav: NavItem[] = [
-  { href: '/', label: 'Price' },
-  { href: '/buy/', label: 'Buy' },
-  { href: '/calculator/', label: 'Calculator' },
-  { href: '/sumcoin-vs-bitcoin/', label: 'SUM vs BTC' },
-  { href: '/history/', label: 'History' },
-  { href: '/index/', label: 'Index' },
-  { href: '/ecosystem/', label: 'Ecosystem' },
+  {
+    href: '/',
+    label: 'Price',
+  },
+  {
+    href: '/peer-to-peer/',
+    label: 'Peer to Peer',
+  },
+  {
+    href: '/buy/',
+    label: 'Buy',
+  },
+  {
+    href: '/calculator/',
+    label: 'Calculator',
+  },
+  {
+    href: '/sumcoin-vs-bitcoin/',
+    label: 'SUM vs BTC',
+  },
+  {
+    href: '/history/',
+    label: 'History',
+  },
+  {
+    href: '/index/',
+    label: 'Index',
+  },
+  {
+    href: '/ecosystem/',
+    label: 'Ecosystem',
+  },
 ]
 
 function PageHeader() {
   return (
     <header className="content-header">
-      <a href="/" className="brand">
+      <a
+        href="/"
+        className="brand"
+      >
         <img
           className="coinmark"
           src="/sumcoin-logo.png"
@@ -39,7 +72,10 @@ function PageHeader() {
 
       <nav className="content-nav">
         {nav.map((item) => (
-          <a key={item.href} href={item.href}>
+          <a
+            key={item.href}
+            href={item.href}
+          >
             {item.label}
           </a>
         ))}
@@ -52,17 +88,37 @@ function PageFooter() {
   return (
     <footer className="content-footer">
       <div>
-        <strong>SumcoinPrice</strong>
+        <strong>
+          SumcoinPrice
+        </strong>
+
         <span>
-          Market data, history and context for the Sumcoin Index.
+          Price, history and practical
+          context for the Sumcoin
+          ecosystem.
         </span>
       </div>
 
       <div className="footer-links">
-        <a href="/">Live Price</a>
-        <a href="https://sumcoin.org/">Sumcoin</a>
-        <a href="https://sumcoinwallet.org/">Wallet</a>
-        <a href="https://sumexplorer.com/">Explorer</a>
+        <a href="/">
+          Live Price
+        </a>
+
+        <a href="/peer-to-peer/">
+          Peer to Peer
+        </a>
+
+        <a href="/calculator/">
+          Calculator
+        </a>
+
+        <a href="https://sumcoinwallet.org/">
+          Wallet
+        </a>
+
+        <a href="https://sumexplorer.com/">
+          Explorer
+        </a>
       </div>
     </footer>
   )
@@ -72,15 +128,29 @@ export function PageShell({
   eyebrow,
   title,
   lead,
+  variant,
   children,
 }: {
   eyebrow: string
   title: string
   lead: string
+  variant:
+    | 'about'
+    | 'index'
+    | 'history'
+    | 'ecosystem'
+    | 'buy'
+    | 'calculator'
+    | 'compare'
+    | 'peer'
   children: React.ReactNode
 }) {
   return (
-    <main className="page content-page">
+    <main
+      className={
+        `page content-page content-page--${variant}`
+      }
+    >
       <div className="ambient ambient-one" />
       <div className="ambient ambient-two" />
 
@@ -92,7 +162,9 @@ export function PageShell({
             {eyebrow}
           </div>
 
-          <h1>{title}</h1>
+          <h1>
+            {title}
+          </h1>
 
           <p className="content-lead">
             {lead}
@@ -119,15 +191,23 @@ export function FeatureGrid({
   return (
     <div className="feature-grid">
       {items.map((item) => (
-        <article className="feature-card" key={item.title}>
+        <article
+          className="feature-card"
+          key={item.title}
+        >
           {item.number && (
             <div className="feature-number">
               {item.number}
             </div>
           )}
 
-          <h2>{item.title}</h2>
-          <p>{item.text}</p>
+          <h2>
+            {item.title}
+          </h2>
+
+          <p>
+            {item.text}
+          </p>
         </article>
       ))}
     </div>
@@ -145,9 +225,17 @@ export function Section({
 }) {
   return (
     <section className="content-section">
-      <div className="section-kicker">{label}</div>
-      <h2 className="section-title">{title}</h2>
-      <div className="section-copy">{children}</div>
+      <div className="section-kicker">
+        {label}
+      </div>
+
+      <h2 className="section-title">
+        {title}
+      </h2>
+
+      <div className="section-copy">
+        {children}
+      </div>
     </section>
   )
 }
@@ -155,80 +243,171 @@ export function Section({
 export function AboutPage() {
   return (
     <PageShell
-      eyebrow="UNDERSTANDING SUMCOIN"
-      title="A digital currency built around indexed value."
-      lead="Sumcoin combines peer-to-peer digital currency with an index-based reference value, giving SUM a different approach to price discovery than assets that depend on one exchange or trading venue."
+      variant="about"
+      eyebrow="WHY SUMCOIN EXISTS"
+      title="A digital currency designed to be used, not merely traded."
+      lead="Sumcoin starts with a simple question: if cryptocurrency is supposed to move directly from one person to another, why should an exchange have to sit in the middle of custody, transfer and price discovery?"
     >
-      <FeatureGrid
-        items={[
-          {
-            number: '01',
-            title: 'Indexed value',
-            text: 'SUM uses the Sumcoin Index as its reference value. The goal is to represent a broader market view rather than treating one centralized exchange as the single source of truth.',
-          },
-          {
-            number: '02',
-            title: 'Self-custody',
-            text: 'SUM can be held directly in a Sumcoin wallet. Ownership does not require leaving the asset deposited with a centralized exchange.',
-          },
-          {
-            number: '03',
-            title: 'Peer-to-peer transfer',
-            text: 'Sumcoin is designed to move directly between wallets over its blockchain, preserving the peer-to-peer model that originally defined cryptocurrency.',
-          },
-        ]}
-      />
+      <section className="manifesto-panel">
+        <div className="manifesto-mark">
+          P2P
+        </div>
+
+        <div>
+          <span>
+            THE SUMCOIN THESIS
+          </span>
+
+          <h2>
+            Separate the currency
+            from the exchange.
+          </h2>
+
+          <p>
+            A centralized exchange can
+            be useful for trading, but
+            it does not have to define
+            the currency itself.
+            Sumcoin combines an
+            independent index reference
+            rate with a blockchain and
+            self-custody wallets so SUM
+            can be held and transferred
+            without first being
+            deposited with an exchange.
+          </p>
+        </div>
+      </section>
+
+      <div className="currency-case-grid">
+        <article>
+          <span>01</span>
+
+          <h2>
+            A reference price before
+            a trade happens
+          </h2>
+
+          <p>
+            The Sumcoin Index is built
+            from the broader crypto
+            market rather than the last
+            trade on one SUM exchange.
+            That gives two people a
+            common reference value even
+            when they are transacting
+            directly.
+          </p>
+        </article>
+
+        <article>
+          <span>02</span>
+
+          <h2>
+            Your wallet can remain
+            your wallet
+          </h2>
+
+          <p>
+            A self-custody wallet lets
+            the user control the keys.
+            Moving SUM between two
+            wallets does not require
+            handing custody to a broker
+            or centralized exchange.
+          </p>
+        </article>
+
+        <article>
+          <span>03</span>
+
+          <h2>
+            Payment can be the end use
+          </h2>
+
+          <p>
+            SUM can move directly from
+            the payer's wallet to the
+            recipient's wallet. The
+            objective is not simply to
+            speculate on a token, but
+            to make the token usable as
+            transferable digital value.
+          </p>
+        </article>
+
+        <article>
+          <span>04</span>
+
+          <h2>
+            Settlement can be checked
+          </h2>
+
+          <p>
+            A public block explorer
+            provides independent
+            verification of addresses,
+            transactions, blocks and
+            confirmations after a
+            payment is broadcast.
+          </p>
+        </article>
+      </div>
 
       <Section
-        label="THE IDEA"
-        title="The currency is the product."
+        label="IS THAT BETTER?"
+        title="It depends on what you want a cryptocurrency to do."
       >
         <p>
-          Cryptocurrency began with a simple idea: electronic
-          value could move directly from one person to another
-          without requiring a financial institution in the middle.
+          If the primary goal is
+          exchange liquidity and
+          speculative trading, an
+          exchange-centered ecosystem
+          can be useful. Sumcoin makes
+          a different design choice.
+          It emphasizes a currency that
+          can still be valued, held and
+          transferred when the two
+          people involved are dealing
+          directly with each other.
         </p>
 
         <p>
-          Over time, centralized exchanges became the dominant
-          place where many digital assets were bought, sold, held
-          and priced. Sumcoin approaches that relationship
-          differently. The network, the wallet and the currency
-          can function independently of an exchange account.
+          For someone who values
+          self-custody, direct payments
+          and less dependence on a
+          centralized trading venue,
+          that can make Sumcoin a
+          stronger fit as money.
         </p>
 
         <blockquote>
-          The exchange does not have to be the product.
-          The currency can be the product.
+          The useful question is not
+          only "What can I trade this
+          for?" It is also "Can I hold
+          it myself, agree on its value
+          and pay another person
+          directly?"
         </blockquote>
-      </Section>
-
-      <Section
-        label="SUMCOINPRICE"
-        title="Why this site exists."
-      >
-        <p>
-          SumcoinPrice is the market-data interface for the
-          Sumcoin Index. It combines current SUM pricing with
-          historical charts, market statistics, purchasing-power
-          comparisons and ecosystem resources.
-        </p>
-
-        <p>
-          The goal is not just to display a current quote. It is
-          to make the long-term behavior of SUM easier to examine
-          and put that behavior into context.
-        </p>
       </Section>
 
       <div className="cta-panel">
         <div>
-          <span>LIVE MARKET DATA</span>
-          <h2>See SUM in real time.</h2>
+          <span>
+            SEE THE TRANSACTION PATH
+          </span>
+
+          <h2>
+            Understand Sumcoin
+            peer to peer.
+          </h2>
         </div>
 
-        <a href="/" className="content-button">
-          Open market dashboard →
+        <a
+          href="/peer-to-peer/"
+          className="content-button"
+        >
+          How P2P works →
         </a>
       </div>
     </PageShell>
@@ -238,89 +417,134 @@ export function AboutPage() {
 export function IndexPage() {
   return (
     <PageShell
-      eyebrow="SUMCOIN INDEX"
-      title="One reference value. Broader market context."
-      lead="The Sumcoin Index provides the reference value used for SUM pricing. SumcoinPrice presents that value alongside historical market information so the current quote can be understood in context."
+      variant="index"
+      eyebrow="THE SUMCOIN INDEX"
+      title="A market reference built from the market, not one order book."
+      lead="According to Sumcoin's published methodology, the SUM reference price follows the top 100 cryptocurrencies by global market capitalization and draws from more than 600 data points in near real time."
     >
+      <div className="index-metrics">
+        <div>
+          <strong>100</strong>
+          <span>
+            leading crypto assets
+          </span>
+        </div>
+
+        <div>
+          <strong>600+</strong>
+          <span>
+            market data points
+          </span>
+        </div>
+
+        <div>
+          <strong>1</strong>
+          <span>
+            SUM reference rate
+          </span>
+        </div>
+      </div>
+
       <LiveMarketStrip />
 
       <div className="index-flow">
         <div className="flow-node">
           <span>01</span>
-          <strong>Market inputs</strong>
+
+          <strong>
+            Observe the broader market
+          </strong>
+
           <p>
-            Market information is observed from the broader
-            cryptocurrency environment.
+            The index tracks the
+            leading cryptocurrencies
+            by global market
+            capitalization.
           </p>
         </div>
 
-        <div className="flow-arrow">→</div>
+        <div className="flow-arrow">
+          →
+        </div>
 
         <div className="flow-node featured">
           <span>02</span>
-          <strong>Sumcoin Index</strong>
+
+          <strong>
+            Apply the SUM index model
+          </strong>
+
           <p>
-            The index produces the reference value used to
-            represent SUM.
+            The broader market inputs
+            are aggregated into the
+            Sumcoin Index reference
+            value.
           </p>
         </div>
 
-        <div className="flow-arrow">→</div>
+        <div className="flow-arrow">
+          →
+        </div>
 
         <div className="flow-node">
           <span>03</span>
-          <strong>SUM reference price</strong>
+
+          <strong>
+            Publish one reference rate
+          </strong>
+
           <p>
-            SumcoinPrice publishes the resulting value with
-            historical and market context.
+            Wallets, counterparties and
+            market tools can use the
+            resulting SUM rate as a
+            common reference point.
           </p>
         </div>
       </div>
 
       <Section
-        label="WHY AN INDEX"
-        title="Price discovery without depending on one venue."
+        label="WHY THIS MATTERS"
+        title="Peer-to-peer money still needs a way for two people to discuss value."
       >
         <p>
-          A cryptocurrency traded primarily through a single
-          exchange can become closely tied to the liquidity,
-          availability and behavior of that venue. An index-based
-          approach is intended to provide a reference value that
-          is not defined solely by one trading location.
+          A wallet can transfer coins
+          without an exchange, but two
+          people still need a way to
+          decide what those coins are
+          worth. Sumcoin's answer is to
+          separate that reference-price
+          function from any single SUM
+          trading venue.
         </p>
 
         <p>
-          That distinction matters because the blockchain and the
-          currency can continue to function whether or not a
-          particular exchange is available.
+          This does not mean every
+          counterparty must transact at
+          exactly the index rate.
+          People can still negotiate.
+          The index supplies a common
+          starting point that does not
+          require both parties to use
+          the same centralized
+          exchange.
         </p>
       </Section>
 
-      <FeatureGrid
-        items={[
-          {
-            title: 'Live reference rate',
-            text: 'The current SUM/USD reference value is presented on the SumcoinPrice dashboard and updated from the Sumcoin market-data feed.',
-          },
-          {
-            title: 'Historical observations',
-            text: 'Historical SUM/USD and SUM/BTC data allow the current index value to be viewed against prior market conditions.',
-          },
-          {
-            title: 'Market context',
-            text: 'Price, market capitalization, supply, volume and comparative performance provide context that a standalone quote cannot.',
-          },
-        ]}
-      />
+      <div className="index-question">
+        <span>
+          PRACTICAL EXAMPLE
+        </span>
 
-      <div className="cta-panel">
-        <div>
-          <span>EXPLORE THE DATA</span>
-          <h2>Follow the index through time.</h2>
-        </div>
+        <h2>
+          If two people agree that an
+          item is worth $500, the index
+          provides a reference for how
+          much SUM represents that
+          value.
+        </h2>
 
-        <a href="/history/" className="content-button">
-          Explore SUM history →
+        <a href="/calculator/">
+          Open the live SUM calculator →
         </a>
       </div>
     </PageShell>
@@ -330,103 +554,114 @@ export function IndexPage() {
 export function HistoryPage() {
   return (
     <PageShell
-      eyebrow="SUM MARKET HISTORY"
-      title="The current price is only one point in the story."
-      lead="SumcoinPrice preserves historical SUM market data so today's index value can be compared with earlier periods, long-term performance and changes in purchasing power."
+      variant="history"
+      eyebrow="SUM THROUGH TIME"
+      title="A price means more when you can see the path that produced it."
+      lead="The Sumcoin Index changes with the broader cryptocurrency market. Historical data lets the current rate be viewed as part of a market cycle rather than as an isolated number."
     >
-      <LiveMarketStrip />
+      <HistorySnapshot />
 
-      <div className="history-strip">
-        <div>
-          <span>PRICE</span>
-          <strong>SUM / USD</strong>
-          <small>Historical reference value</small>
-        </div>
+      <div className="history-lenses">
+        <article>
+          <span>
+            RECENT
+          </span>
 
-        <div>
-          <span>RELATIVE VALUE</span>
-          <strong>SUM / BTC</strong>
-          <small>Performance in Bitcoin terms</small>
-        </div>
+          <h2>
+            What changed this year?
+          </h2>
 
-        <div>
-          <span>CONTEXT</span>
-          <strong>Normalized to 100</strong>
-          <small>Cross-asset comparison</small>
-        </div>
+          <p>
+            One-year data emphasizes
+            the current market cycle,
+            recent highs and lows, and
+            whether SUM has gained or
+            lost value over the period.
+          </p>
+        </article>
 
-        <div>
-          <span>PURCHASING POWER</span>
-          <strong>U.S. CPI</strong>
-          <small>Real-world monetary context</small>
-        </div>
+        <article>
+          <span>
+            LONG RANGE
+          </span>
+
+          <h2>
+            What does the full record
+            look like?
+          </h2>
+
+          <p>
+            The all-time series makes
+            it possible to distinguish
+            a temporary local high from
+            the actual historical
+            extremes recorded by the
+            index.
+          </p>
+        </article>
+
+        <article>
+          <span>
+            RELATIVE
+          </span>
+
+          <h2>
+            What happened versus
+            Bitcoin?
+          </h2>
+
+          <p>
+            SUM/BTC history removes the
+            dollar from the comparison
+            and shows how the Sumcoin
+            reference value changed in
+            Bitcoin terms.
+          </p>
+        </article>
       </div>
 
       <Section
-        label="HISTORICAL DATA"
-        title="A chart should show more than the latest move."
+        label="COMPARATIVE VALUE"
+        title="Different nominal prices become easier to understand when every asset starts at 100."
       >
         <p>
-          The main SumcoinPrice interface includes multiple
-          historical timeframes, candlestick and line charts,
-          OHLC data, crosshair inspection and technical indicators.
+          The main dashboard normalizes
+          SUM, Bitcoin, gold, silver
+          and U.S. dollar purchasing
+          power to the same starting
+          value. A move from 100 to 150
+          means a 50% increase
+          regardless of the asset's
+          original dollar price.
         </p>
 
         <p>
-          Historical analysis is especially important for an
-          asset whose current nominal price can look very different
-          from earlier periods. Long-term data makes it possible
-          to see drawdowns, recoveries, trend changes and major
-          price regimes instead of judging SUM from one snapshot.
-        </p>
-      </Section>
-
-      <FeatureGrid
-        items={[
-          {
-            number: '1Y',
-            title: 'Recent market cycle',
-            text: 'A one-year view emphasizes recent market structure, momentum and shorter-term changes in the SUM reference value.',
-          },
-          {
-            number: '5Y',
-            title: 'Longer-term behavior',
-            text: 'Multi-year views reduce the importance of short-lived volatility and make larger changes in value easier to see.',
-          },
-          {
-            number: 'ALL',
-            title: 'Full historical context',
-            text: 'The all-time view provides the broadest perspective and preserves the distinction between a local period high and the true historical all-time high.',
-          },
-        ]}
-      />
-
-      <Section
-        label="RELATIVE PERFORMANCE"
-        title="Different assets need a common starting point."
-      >
-        <p>
-          SumcoinPrice can normalize SUM, Bitcoin, gold, silver
-          and U.S. dollar purchasing power to the same starting
-          value of 100. This removes the distraction of radically
-          different nominal prices.
-        </p>
-
-        <p>
-          A move from 100 to 150 represents a 50% gain regardless
-          of whether the underlying asset began at one dollar,
-          one thousand dollars or one hundred thousand dollars.
+          That is useful because a high
+          nominal coin price does not
+          by itself tell you whether an
+          asset performed well. What
+          matters is the percentage
+          change over the same period.
         </p>
       </Section>
 
       <div className="cta-panel">
         <div>
-          <span>INTERACTIVE HISTORY</span>
-          <h2>Use the full market dashboard.</h2>
+          <span>
+            INTERACTIVE DATA
+          </span>
+
+          <h2>
+            Inspect the complete SUM
+            chart.
+          </h2>
         </div>
 
-        <a href="/#performance" className="content-button">
-          View performance charts →
+        <a
+          href="/"
+          className="content-button"
+        >
+          Open dashboard →
         </a>
       </div>
     </PageShell>
@@ -436,10 +671,53 @@ export function HistoryPage() {
 export function EcosystemPage() {
   return (
     <PageShell
-      eyebrow="SUMCOIN ECOSYSTEM"
-      title="The network is bigger than a price chart."
-      lead="SumcoinPrice connects market information with the tools used to hold, inspect and interact with SUM across the broader Sumcoin ecosystem."
+      variant="ecosystem"
+      eyebrow="THE SUMCOIN LOOP"
+      title="Price it. Hold it. Pay with it. Verify it."
+      lead="A usable peer-to-peer currency needs more than a price chart. Sumcoin's ecosystem separates reference pricing, custody, transfer, discovery and blockchain verification into distinct tools."
     >
+      <div className="ecosystem-loop">
+        <div>
+          <span>01</span>
+          <strong>PRICE</strong>
+          <p>
+            SumcoinPrice and the
+            Sumcoin Index provide a
+            reference value.
+          </p>
+        </div>
+
+        <div>
+          <span>02</span>
+          <strong>HOLD</strong>
+          <p>
+            Sumcoin Wallet provides
+            self-custody and wallet
+            addresses.
+          </p>
+        </div>
+
+        <div>
+          <span>03</span>
+          <strong>USE</strong>
+          <p>
+            People can transact
+            directly or discover peers
+            through the marketplace.
+          </p>
+        </div>
+
+        <div>
+          <span>04</span>
+          <strong>VERIFY</strong>
+          <p>
+            SumExplorer provides an
+            independent view of
+            on-chain settlement.
+          </p>
+        </div>
+      </div>
+
       <div className="ecosystem-grid">
         <a
           href="https://sumcoinwallet.org/"
@@ -448,96 +726,346 @@ export function EcosystemPage() {
           <div className="ecosystem-icon">
             <img
               src="/sumcoin-wallet-logo.webp"
-              alt=""
+              alt="Sumcoin Wallet"
             />
           </div>
 
           <span>SELF-CUSTODY</span>
-          <h2>Sumcoin Wallet</h2>
+
+          <h2>
+            Sumcoin Wallet
+          </h2>
+
           <p>
-            A non-custodial wallet for holding and transferring
-            SUM directly.
+            The official wallet
+            describes itself as
+            self-custody and gives the
+            user control of the wallet
+            recovery phrase and keys.
+            It can send and receive SUM
+            directly between wallet
+            addresses.
           </p>
 
-          <strong>Open wallet site →</strong>
+          <strong>
+            Open wallet site →
+          </strong>
         </a>
 
         <a
           href="https://sumexplorer.com/"
           className="ecosystem-card"
         >
-          <div className="ecosystem-symbol">◈</div>
+          <div className="ecosystem-symbol">
+            ◎
+          </div>
 
-          <span>BLOCKCHAIN DATA</span>
-          <h2>Sumcoin Explorer</h2>
+          <span>
+            PUBLIC VERIFICATION
+          </span>
+
+          <h2>
+            SumExplorer
+          </h2>
+
           <p>
-            Inspect blocks, transactions and activity recorded
-            on the Sumcoin blockchain.
+            Search transactions,
+            addresses, blocks and
+            confirmations to verify
+            what the blockchain
+            actually recorded.
           </p>
 
-          <strong>Open explorer →</strong>
-        </a>
-
-        <a
-          href="https://sumcoin.org/"
-          className="ecosystem-card"
-        >
-          <div className="ecosystem-symbol">Σ</div>
-
-          <span>NETWORK</span>
-          <h2>Sumcoin</h2>
-          <p>
-            Learn about SUM, the network and the broader Sumcoin
-            project.
-          </p>
-
-          <strong>Visit Sumcoin.org →</strong>
+          <strong>
+            Open explorer →
+          </strong>
         </a>
 
         <a
           href="https://sumcoinmarketplace.com/"
           className="ecosystem-card"
         >
-          <div className="ecosystem-symbol">◆</div>
+          <div className="ecosystem-symbol">
+            ↔
+          </div>
 
-          <span>MARKETPLACE</span>
-          <h2>Sumcoin Marketplace</h2>
+          <span>
+            P2P DISCOVERY
+          </span>
+
+          <h2>
+            Sumcoin Marketplace
+          </h2>
+
           <p>
-            Explore commerce and services connected with the
-            Sumcoin ecosystem.
+            Buyers and sellers can
+            discover one another,
+            negotiate directly and use
+            SUM as payment rather than
+            treating the currency only
+            as something to trade on an
+            exchange.
           </p>
 
-          <strong>Open marketplace →</strong>
+          <strong>
+            Explore marketplace →
+          </strong>
+        </a>
+
+        <a
+          href="https://sumcoin.org/"
+          className="ecosystem-card"
+        >
+          <div className="ecosystem-symbol">
+            Σ
+          </div>
+
+          <span>
+            NETWORK + DOCUMENTATION
+          </span>
+
+          <h2>
+            Sumcoin.org
+          </h2>
+
+          <p>
+            The official project site
+            links the network, wallet,
+            index methodology, exchange
+            resources and other Sumcoin
+            documentation.
+          </p>
+
+          <strong>
+            Visit Sumcoin.org →
+          </strong>
         </a>
       </div>
 
       <Section
-        label="HOW IT CONNECTS"
-        title="Price, ownership and verification are separate layers."
+        label="NO SINGLE TOOL DOES EVERYTHING"
+        title="That separation is part of the point."
       >
         <p>
-          SumcoinPrice provides market context. A wallet provides
-          custody and transaction creation. A blockchain explorer
-          provides an independent view of confirmed network
-          activity.
+          SumcoinPrice does not hold
+          your SUM. The wallet does not
+          decide whether a blockchain
+          transaction exists. The
+          explorer does not need to
+          custody your money. The
+          marketplace can help people
+          find one another without
+          becoming the blockchain
+          itself.
         </p>
 
         <p>
-          Separating those functions is useful because no single
-          website needs to control every part of the experience.
-          Market information, self-custody and blockchain
-          verification can remain distinct.
+          Separating those roles makes
+          it easier to understand where
+          trust is required and where
+          independent verification is
+          possible.
+        </p>
+      </Section>
+    </PageShell>
+  )
+}
+
+export function PeerToPeerPage() {
+  return (
+    <PageShell
+      variant="peer"
+      eyebrow="PEER-TO-PEER SUMCOIN"
+      title="Peer to peer is not a slogan. It is the transaction path."
+      lead="Two people can agree on value, exchange a wallet address, send SUM directly and verify the settlement on the public blockchain. An exchange does not have to custody the payment in the middle."
+    >
+      <P2PReferenceCard />
+
+      <section className="p2p-steps">
+        <article>
+          <span>01</span>
+
+          <div>
+            <h2>
+              Agree on value
+            </h2>
+
+            <p>
+              Buyer and seller agree
+              on the terms of the
+              transaction. The Sumcoin
+              Index can provide a
+              common SUM/USD reference
+              rate while the parties
+              remain free to negotiate.
+            </p>
+          </div>
+        </article>
+
+        <article>
+          <span>02</span>
+
+          <div>
+            <h2>
+              Share the receiving
+              address
+            </h2>
+
+            <p>
+              The recipient provides a
+              SUM wallet address or QR
+              code. The sender should
+              verify the address before
+              approving the transfer.
+            </p>
+          </div>
+        </article>
+
+        <article>
+          <span>03</span>
+
+          <div>
+            <h2>
+              Send wallet to wallet
+            </h2>
+
+            <p>
+              The sender authorizes the
+              transaction from their
+              own wallet. SUM moves
+              through the Sumcoin
+              network rather than
+              through an exchange
+              account.
+            </p>
+          </div>
+        </article>
+
+        <article>
+          <span>04</span>
+
+          <div>
+            <h2>
+              Let the network settle
+              it
+            </h2>
+
+            <p>
+              The transaction is
+              broadcast to the network
+              and recorded on the
+              blockchain as it receives
+              confirmation.
+            </p>
+          </div>
+        </article>
+
+        <article>
+          <span>05</span>
+
+          <div>
+            <h2>
+              Verify independently
+            </h2>
+
+            <p>
+              Either party can use
+              SumExplorer to check the
+              transaction ID, address,
+              block and confirmations
+              instead of relying only
+              on a screenshot or claim
+              from the other person.
+            </p>
+          </div>
+        </article>
+      </section>
+
+      <div className="peer-case-grid">
+        <article>
+          <span>
+            WHAT DISAPPEARS
+          </span>
+
+          <h2>
+            Exchange custody is not
+            required for the transfer.
+          </h2>
+
+          <p>
+            The sender does not have to
+            deposit SUM with a
+            centralized exchange just
+            to pay another SUM wallet.
+          </p>
+        </article>
+
+        <article>
+          <span>
+            WHAT REMAINS
+          </span>
+
+          <h2>
+            Personal responsibility
+            still matters.
+          </h2>
+
+          <p>
+            Blockchain payments can be
+            irreversible. Users still
+            need to verify addresses,
+            understand counterparties,
+            agree on terms and follow
+            applicable laws.
+          </p>
+        </article>
+      </div>
+
+      <Section
+        label="WHY SUMCOIN MAKES A CURRENCY CASE"
+        title="A currency becomes more useful when its value and its transfer do not depend on the same intermediary."
+      >
+        <p>
+          Sumcoin's design separates
+          reference pricing from
+          settlement. The index supplies
+          a market reference. The wallet
+          controls the payment. The
+          blockchain records the
+          settlement. The explorer lets
+          people check the result.
+        </p>
+
+        <p>
+          That does not make every P2P
+          transaction risk-free and it
+          does not remove the need for
+          adoption. It does, however,
+          create a coherent path for
+          using SUM as money between
+          peers rather than requiring
+          every use of SUM to begin and
+          end on an exchange.
         </p>
       </Section>
 
       <div className="cta-panel">
         <div>
-          <span>START WITH THE MARKET</span>
-          <h2>See the current SUM reference value.</h2>
+          <span>
+            USE THE ECOSYSTEM
+          </span>
+
+          <h2>
+            Wallet, marketplace and
+            explorer.
+          </h2>
         </div>
 
-        <a href="/" className="content-button">
-          Live Sumcoin price →
+        <a
+          href="/ecosystem/"
+          className="content-button"
+        >
+          Explore the tools →
         </a>
       </div>
     </PageShell>

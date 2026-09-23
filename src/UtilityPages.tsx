@@ -1,11 +1,12 @@
 import {
-  FeatureGrid,
   PageShell,
   Section,
 } from './ContentPages'
 
 import {
+  CompareStats,
   LiveMarketStrip,
+  RateExamples,
   SumBtcSnapshot,
   SumCalculator,
 } from './MarketTools'
@@ -13,115 +14,176 @@ import {
 export function BuyPage() {
   return (
     <PageShell
-      eyebrow="GET SUMCOIN"
-      title="How to get, hold and use Sumcoin."
-      lead="Start with the current SUM Index rate, choose an acquisition method you understand, and move SUM to a self-custody wallet when appropriate."
+      variant="buy"
+      eyebrow="GET AND USE SUM"
+      title="There is more than one path to Sumcoin."
+      lead="A peer-to-peer currency does not need one mandatory exchange. Start with a wallet, understand the current index rate, choose an acquisition path you trust and keep control of where your SUM ultimately lives."
     >
       <LiveMarketStrip />
 
-      <div className="buy-paths">
-        <article className="buy-path">
+      <section className="buy-rail">
+        <article>
           <span>01</span>
 
-          <h2>
-            Get a SUM wallet
-          </h2>
+          <div>
+            <h2>
+              Start with a wallet
+            </h2>
 
-          <p>
-            A self-custody wallet gives
-            you a Sumcoin address for
-            receiving and holding SUM
-            without leaving the currency
-            with a third party.
-          </p>
+            <p>
+              Create a SUM address in
+              the self-custody Sumcoin
+              Wallet before deciding
+              how you want to acquire
+              coins.
+            </p>
+          </div>
 
-          <a
-            href="https://sumcoinwallet.org/"
-          >
-            Sumcoin Wallet →
+          <a href="https://sumcoinwallet.org/">
+            Get the wallet →
           </a>
         </article>
 
-        <article className="buy-path">
+        <article>
           <span>02</span>
 
-          <h2>
-            Check acquisition options
-          </h2>
+          <div>
+            <h2>
+              Know the reference rate
+            </h2>
 
-          <p>
-            Availability changes by
-            region and provider. Use the
-            official Sumcoin acquisition
-            resources to review current
-            exchange, swap or kiosk
-            options.
-          </p>
+            <p>
+              Check the live Sumcoin
+              Index so you have a
+              reference point before
+              evaluating a quote or
+              negotiating directly with
+              another person.
+            </p>
+          </div>
 
-          <a
-            href="https://www.sumcoin.org/exchange/"
-          >
-            Official buy resources →
+          <a href="/calculator/">
+            Convert SUM ↔ USD →
           </a>
         </article>
 
-        <article className="buy-path">
+        <article>
           <span>03</span>
 
+          <div>
+            <h2>
+              Choose the path
+            </h2>
+
+            <p>
+              Depending on availability,
+              SUM may be acquired
+              peer-to-peer, through
+              supported decentralized
+              tools or through other
+              acquisition resources
+              listed by the official
+              Sumcoin project.
+            </p>
+          </div>
+
+          <a href="https://www.sumcoin.org/exchange/">
+            Official resources →
+          </a>
+        </article>
+
+        <article>
+          <span>04</span>
+
+          <div>
+            <h2>
+              Verify where it arrived
+            </h2>
+
+            <p>
+              After a transfer, use
+              your wallet and
+              SumExplorer to verify the
+              transaction and its
+              confirmations.
+            </p>
+          </div>
+
+          <a href="https://sumexplorer.com/">
+            Open explorer →
+          </a>
+        </article>
+      </section>
+
+      <div className="buy-options">
+        <article className="buy-option p2p-option">
+          <span>
+            PEER TO PEER
+          </span>
+
           <h2>
-            Check the index rate
+            Buy, sell or trade directly
+            with another person.
           </h2>
 
           <p>
-            Compare any quoted price with
-            the current SUM Index
-            reference rate before
-            completing a transaction.
+            The marketplace exists to
+            help peers discover one
+            another. The parties can
+            negotiate terms themselves
+            and transfer SUM directly
+            between wallets.
           </p>
 
-          <a href="/">
-            Live SUM price →
+          <a href="https://sumcoinmarketplace.com/">
+            Explore Sumcoin Marketplace →
+          </a>
+        </article>
+
+        <article className="buy-option">
+          <span>
+            THIRD-PARTY OPTIONS
+          </span>
+
+          <h2>
+            Review available exchange,
+            DEX or kiosk resources.
+          </h2>
+
+          <p>
+            Availability, spreads,
+            payment methods,
+            verification requirements
+            and fees can vary. Sumcoin's
+            official exchange page
+            links to known resources
+            but advises users to do
+            their own research.
+          </p>
+
+          <a href="https://www.sumcoin.org/exchange/">
+            Review official links →
           </a>
         </article>
       </div>
 
       <Section
-        label="BEFORE YOU TRANSACT"
-        title="Know the difference between a reference price and a trading quote."
+        label="ACQUISITION IS NOT CUSTODY"
+        title="Getting SUM and holding SUM are two different decisions."
       >
         <p>
-          SumcoinPrice publishes the
-          current SUM Index reference
-          value. A third-party provider
-          may quote a different effective
-          price because of liquidity,
-          spread, fees or payment method.
-        </p>
-
-        <p>
-          Verify the provider, understand
-          its fees and confirm the wallet
-          address before sending funds.
-          Blockchain transactions can be
-          irreversible.
+          A service used to acquire a
+          cryptocurrency does not have
+          to remain its permanent
+          custodian. Once a user has
+          SUM in a compatible
+          self-custody wallet, later
+          wallet-to-wallet payments can
+          take place without returning
+          the coins to the original
+          acquisition service.
         </p>
       </Section>
-
-      <div className="cta-panel">
-        <div>
-          <span>SELF CUSTODY</span>
-          <h2>
-            Store SUM in your own wallet.
-          </h2>
-        </div>
-
-        <a
-          href="https://sumcoinwallet.org/"
-          className="content-button"
-        >
-          Get Sumcoin Wallet →
-        </a>
-      </div>
     </PageShell>
   )
 }
@@ -129,54 +191,56 @@ export function BuyPage() {
 export function CalculatorPage() {
   return (
     <PageShell
-      eyebrow="SUM CALCULATOR"
-      title="Convert Sumcoin to U.S. dollars at the live index rate."
-      lead="Enter any amount of SUM to calculate its current USD reference value using the live Sumcoin Index price."
+      variant="calculator"
+      eyebrow="LIVE SUM CONVERTER"
+      title="Put the Sumcoin Index into numbers you can use."
+      lead="Convert in either direction. Enter SUM to estimate its current U.S. dollar reference value, or enter dollars to see the equivalent amount of SUM at the live index rate."
     >
       <SumCalculator />
 
-      <LiveMarketStrip />
-
-      <FeatureGrid
-        items={[
-          {
-            number: 'SUM',
-            title:
-              'Live reference rate',
-            text:
-              'The calculator uses the same current SUM/USD reference rate displayed by the SumcoinPrice market dashboard.',
-          },
-          {
-            number: 'USD',
-            title:
-              'Instant conversion',
-            text:
-              'Change the SUM amount and the estimated U.S. dollar value updates using the current index rate.',
-          },
-          {
-            number: 'LIVE',
-            title:
-              'Market context',
-            text:
-              'Price is shown alongside market capitalization, volume and supply so the conversion is not viewed in isolation.',
-          },
-        ]}
-      />
+      <RateExamples />
 
       <Section
-        label="REFERENCE VALUE"
-        title="A calculator is not a trade quote."
+        label="REFERENCE RATE ≠ GUARANTEED QUOTE"
+        title="The index gives you a benchmark. The transaction still belongs to the parties."
       >
         <p>
-          The result represents the
-          Sumcoin Index reference value.
-          The amount offered by a
-          particular exchange, swap,
-          kiosk or private counterparty
-          can differ because of fees,
-          spread and liquidity.
+          The calculator uses the
+          Sumcoin Index reference rate.
+          A peer-to-peer counterparty,
+          kiosk, DEX or other provider
+          may use a different effective
+          price because of fees, spread,
+          liquidity or negotiated terms.
+        </p>
+
+        <p>
+          That distinction is useful:
+          the index can provide a common
+          starting point without
+          requiring the index itself to
+          become the custodian or
+          counterparty to the payment.
         </p>
       </Section>
+
+      <div className="calculator-next">
+        <div>
+          <span>
+            NEXT STEP
+          </span>
+
+          <h2>
+            See how the reference rate
+            fits into a direct P2P
+            payment.
+          </h2>
+        </div>
+
+        <a href="/peer-to-peer/">
+          Follow a peer-to-peer payment →
+        </a>
+      </div>
     </PageShell>
   )
 }
@@ -184,88 +248,101 @@ export function CalculatorPage() {
 export function ComparePage() {
   return (
     <PageShell
-      eyebrow="SUMCOIN VS BITCOIN"
-      title="Two cryptocurrencies. Two different approaches to price."
-      lead="Compare SUM with Bitcoin using the live SUM/BTC ratio, historical market data and the different mechanisms used to express value."
+      variant="compare"
+      eyebrow="SUMCOIN / BITCOIN"
+      title="The important difference is not whether either network can transfer value peer to peer."
+      lead="Bitcoin and Sumcoin both use blockchain networks. The distinction Sumcoin emphasizes is how a reference price is formed: Bitcoin is market-priced across trading venues, while SUM uses an index derived from the broader cryptocurrency market."
     >
       <SumBtcSnapshot />
 
-      <LiveMarketStrip />
+      <CompareStats />
 
-      <div className="compare-grid">
-        <article className="compare-card">
-          <strong>SUMCOIN</strong>
+      <div className="compare-split">
+        <article className="compare-sum">
+          <span>SUMCOIN</span>
 
           <h2>
-            Index-derived reference value
+            Index reference pricing
           </h2>
 
           <p>
-            Sumcoin describes its
-            reference price as an index
-            derived from the broader
-            cryptocurrency market,
-            including the leading assets
-            by market capitalization.
+            Sumcoin's published
+            methodology derives the SUM
+            reference value from the
+            leading cryptocurrencies by
+            global market
+            capitalization.
+          </p>
+
+          <p>
+            The design goal is to avoid
+            making one SUM exchange's
+            latest trade the sole
+            reference for the currency.
           </p>
         </article>
 
-        <article className="compare-card">
-          <strong>BITCOIN</strong>
+        <article className="compare-btc">
+          <span>BITCOIN</span>
 
           <h2>
-            Market-traded price
+            Market-traded pricing
           </h2>
 
           <p>
-            Bitcoin prices are formed
-            through trading activity
-            across exchanges and other
-            markets, with quotes varying
+            Bitcoin's observed dollar
+            price is formed through
+            trading across exchanges
+            and markets. Quotes can vary
             slightly among venues.
           </p>
-        </article>
-
-        <article className="compare-card">
-          <strong>SUM / BTC</strong>
-
-          <h2>
-            Relative purchasing value
-          </h2>
 
           <p>
-            Expressing one SUM in BTC
-            makes it possible to examine
-            Sumcoin performance without
-            using the U.S. dollar as the
-            common denominator.
+            Bitcoin itself can still be
+            transferred directly
+            between wallets; exchange
+            pricing and blockchain
+            transfer are separate
+            concepts.
           </p>
         </article>
       </div>
 
       <Section
-        label="COMPARE PERFORMANCE"
-        title="Nominal price alone does not tell the whole story."
+        label="WHAT SUMCOIN CHANGES"
+        title="Sumcoin adds an index reference to the peer-to-peer model."
       >
         <p>
-          SumcoinPrice stores historical
-          SUM/USD and SUM/BTC observations
-          and also provides normalized
-          performance views. That lets
-          different assets begin from the
-          same starting value and makes
-          percentage performance easier
-          to compare.
+          Sumcoin's argument is that
+          direct digital money benefits
+          from a reference price that
+          can exist independently of a
+          single trading venue. That is
+          particularly relevant when
+          two people want to negotiate
+          a transaction directly rather
+          than first meeting inside an
+          exchange order book.
+        </p>
+
+        <p>
+          The SUM/BTC pair on this page
+          provides another way to view
+          that relationship by
+          expressing one SUM directly in
+          Bitcoin terms.
         </p>
       </Section>
 
       <div className="cta-panel">
         <div>
-          <span>INTERACTIVE CHART</span>
+          <span>
+            FULL COMPARISON DATA
+          </span>
 
           <h2>
-            Switch the dashboard to
-            SUM / BTC.
+            Inspect SUM against Bitcoin
+            over time.
           </h2>
         </div>
 
@@ -273,7 +350,7 @@ export function ComparePage() {
           href="/"
           className="content-button"
         >
-          Compare on dashboard →
+          Open performance chart →
         </a>
       </div>
     </PageShell>

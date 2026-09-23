@@ -119,6 +119,122 @@ try {
     // still usable without BTC.
   }
 
+  /*
+   * Pull a small set of historical
+   * summaries into initial state so
+   * history/comparison pages contain
+   * real data before browser JS runs.
+   */
+  try {
+    async function getHistory(
+      range,
+      pair
+    ) {
+      const response =
+        await fetch(
+          `https://sumcoinprice.com/api/history.php?range=${range}&pair=${pair}`,
+          {
+            headers: {
+              'User-Agent':
+                'SumcoinPrice-Prerender/3.0',
+            },
+          }
+        )
+
+      if (!response.ok) {
+        throw new Error(
+          `History ${pair}/${range} HTTP ${response.status}`
+        )
+      }
+
+      const json =
+        await response.json()
+
+      if (!json.success) {
+        throw new Error(
+          `History ${pair}/${range} unsuccessful`
+        )
+      }
+
+      return json
+    }
+
+    const [
+      usd1y,
+      usdAll,
+      btc1y,
+    ] =
+      await Promise.all([
+        getHistory(
+          '1y',
+          'usd'
+        ),
+        getHistory(
+          'all',
+          'usd'
+        ),
+        getHistory(
+          '1y',
+          'btc'
+        ),
+      ])
+
+    const summaries = {
+      usd_1y_change:
+        Number(
+          usd1y.period?.change_percent
+        ),
+      usd_1y_high:
+        Number(
+          usd1y.period?.high
+        ),
+      usd_1y_low:
+        Number(
+          usd1y.period?.low
+        ),
+      usd_all_high:
+        Number(
+          usdAll.period?.high
+        ),
+      usd_all_low:
+        Number(
+          usdAll.period?.low
+        ),
+      btc_1y_change:
+        Number(
+          btc1y.period?.change_percent
+        ),
+      btc_1y_high:
+        Number(
+          btc1y.period?.high
+        ),
+      btc_1y_low:
+        Number(
+          btc1y.period?.low
+        ),
+    }
+
+    for (
+      const [key, value]
+      of Object.entries(
+        summaries
+      )
+    ) {
+      if (
+        Number.isFinite(value)
+      ) {
+        market[key] =
+          value
+      }
+    }
+
+  } catch (error) {
+    console.warn(
+      'Historical SEO summaries unavailable:',
+      error.message
+    )
+  }
+
   console.log(
     `Fetched SUM market data: $${market.price.toFixed(2)}`
   )

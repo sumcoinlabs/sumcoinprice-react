@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sumcoinprice.com/sitemap.xml
+Sitemap: https://sumcoinprice.com/sitemaps.xml

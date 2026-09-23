@@ -22,6 +22,7 @@ import {
 import './App.css'
 import MarketSnapshot from './MarketSnapshot'
 import ComparisonChart from './ComparisonChart'
+import { useInitialMarketData } from './MarketTools'
 
 
 type Range =
@@ -384,6 +385,9 @@ function calculateMACD(points: Point[]) {
 
 
 function App() {
+  const initialMarket =
+    useInitialMarketData()
+
   const chartContainer =
     useRef<HTMLDivElement>(null)
 
@@ -1660,6 +1664,11 @@ function App() {
     hoverPrice !== null
       ? hoverPrice
       : result?.latest.price ??
+        (
+          pair === 'usd'
+            ? initialMarket?.price
+            : initialMarket?.btc_ratio
+        ) ??
         null
 
 
@@ -1812,16 +1821,16 @@ function App() {
               Price
             </a>
 
-            <a href="/about/">
-              About
+            <a href="/peer-to-peer/">
+              Peer to Peer
             </a>
 
-            <a href="/index/">
-              Index
+            <a href="/buy/">
+              Buy
             </a>
 
-            <a href="/ecosystem/">
-              Ecosystem
+            <a href="/sumcoin-vs-bitcoin/">
+              SUM vs BTC
             </a>
 
             <a href="/history/">
@@ -1982,7 +1991,9 @@ function App() {
               ) : (
 
                 <div className="change">
-                  Loading market data…
+                  {initialMarket
+                    ? 'Live index snapshot'
+                    : 'Loading market data…'}
                 </div>
 
               )}

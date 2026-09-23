@@ -103,7 +103,18 @@ const pages = [
       'Compare Sumcoin and Bitcoin with the live SUM/BTC ratio, SUM Index price, historical performance and differences in price formation.',
     label:
       'Sumcoin vs Bitcoin',
+  },  {
+    path: '/peer-to-peer/',
+    directory: 'peer-to-peer',
+    type: 'WebPage',
+    title:
+      'Peer-to-Peer Sumcoin | Direct Wallet-to-Wallet Payments',
+    description:
+      'Learn how Sumcoin peer-to-peer payments work, from the SUM reference rate and self-custody wallet to direct transfer and blockchain verification.',
+    label:
+      'Peer-to-Peer Sumcoin',
   },
+
 ]
 
 function escapeAttribute(value) {
@@ -319,20 +330,28 @@ function seoForPage(
             : `Sumcoin (SUM) is ${price} USD today. Compare SUM with Bitcoin using live and historical market data.`,
       }
 
+    case '/peer-to-peer/':
+      return {
+        title:
+          `Peer-to-Peer Sumcoin | Direct SUM Payments | ${price}`,
+        description:
+          `Sumcoin (SUM) is ${price} USD today. Learn how two people can agree on value, send SUM wallet-to-wallet and verify the payment on-chain without exchange custody.`,
+      }
+
     case '/about/':
       return {
         title:
-          page.title,
+          `What Is Sumcoin? | SUM ${price} Today`,
         description:
-          `Sumcoin (SUM) is ${price} USD today. Learn what Sumcoin is, how indexed value works, and how SUM supports peer-to-peer transfer and self-custody.`,
+          `Sumcoin (SUM) is ${price} USD today. Learn why Sumcoin combines indexed value, self-custody and direct peer-to-peer transfer.`,
       }
 
     case '/ecosystem/':
       return {
         title:
-          page.title,
+          `Sumcoin Ecosystem | Wallet, P2P & SUM ${price}`,
         description:
-          `Sumcoin (SUM) is ${price} USD today. Explore the Sumcoin wallet, blockchain explorer, network, marketplace and live market-data ecosystem.`,
+          `Sumcoin (SUM) is ${price} USD today. Explore the wallet, marketplace, blockchain explorer, index and peer-to-peer Sumcoin ecosystem.`,
       }
 
     default:
@@ -805,7 +824,7 @@ ${legacyUrls.map((url) => `  <url>
 await fs.writeFile(
   path.join(
     dist,
-    'sitemap.xml'
+    'sitemaps.xml'
   ),
   sitemap,
   'utf8'

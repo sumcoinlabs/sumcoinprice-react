@@ -3,6 +3,10 @@ import {
   useState,
 } from 'react'
 
+import {
+  useInitialMarketData,
+} from './MarketTools'
+
 
 type MarketData = {
   success: boolean
@@ -144,13 +148,42 @@ function supply(
 
 export default function MarketSnapshot() {
 
+  const initialMarket =
+    useInitialMarketData()
+
+  const initialSnapshot:
+    MarketData | null =
+      initialMarket
+        ? {
+            success: true,
+            name: 'Sumcoin',
+            symbol: 'SUM',
+            currency: 'USD',
+            price:
+              initialMarket.price,
+            market_cap:
+              initialMarket.market_cap,
+            volume_24h:
+              initialMarket.volume_24h,
+            circulating_supply:
+              initialMarket.circulating_supply,
+            max_supply:
+              initialMarket.max_supply,
+            fully_diluted_market_cap:
+              null,
+            updated_at:
+              initialMarket.updated_at ??
+              '',
+          }
+        : null
+
   const [
     market,
     setMarket
   ] =
     useState<
       MarketData | null
-    >(null)
+    >(initialSnapshot)
 
 
   useEffect(() => {

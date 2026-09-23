@@ -5,6 +5,7 @@ import {
   IndexPage,
   HistoryPage,
   EcosystemPage,
+  PeerToPeerPage,
 } from './ContentPages'
 
 import {
@@ -114,6 +115,9 @@ export default function Router({
 
     case '/ecosystem/':
       return <EcosystemPage />
+
+    case '/peer-to-peer/':
+      return <PeerToPeerPage />
 
     case '/buy/':
       return <BuyPage />
