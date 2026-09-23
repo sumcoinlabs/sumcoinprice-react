@@ -1808,20 +1808,24 @@ function App() {
 
           <nav className="desktop-nav">
 
-            <a href="#price">
+            <a href="/">
               Price
             </a>
 
-            <a href="#why">
-              Why Sumcoin
+            <a href="/about/">
+              About
             </a>
 
-            <a href="#ecosystem">
+            <a href="/index/">
+              Index
+            </a>
+
+            <a href="/ecosystem/">
               Ecosystem
             </a>
 
-            <a href="#performance">
-              Performance
+            <a href="/history/">
+              History
             </a>
 
           </nav>

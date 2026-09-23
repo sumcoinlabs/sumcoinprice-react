@@ -329,12 +329,6 @@ const sitemap =
 `
 
 await fs.writeFile(
-  path.join(root, 'public', 'sitemap.xml'),
-  sitemap,
-  'utf8'
-)
-
-await fs.writeFile(
   path.join(root, 'dist', 'sitemap.xml'),
   sitemap,
   'utf8'
