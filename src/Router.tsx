@@ -7,6 +7,12 @@ import {
   EcosystemPage,
 } from './ContentPages'
 
+import {
+  BuyPage,
+  CalculatorPage,
+  ComparePage,
+} from './UtilityPages'
+
 type RouterProps = {
   pathname: string
 }
@@ -108,6 +114,15 @@ export default function Router({
 
     case '/ecosystem/':
       return <EcosystemPage />
+
+    case '/buy/':
+      return <BuyPage />
+
+    case '/calculator/':
+      return <CalculatorPage />
+
+    case '/sumcoin-vs-bitcoin/':
+      return <ComparePage />
 
     default:
       return <NotFound />

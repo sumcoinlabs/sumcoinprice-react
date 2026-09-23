@@ -7,9 +7,11 @@ type NavItem = {
 
 const nav: NavItem[] = [
   { href: '/', label: 'Price' },
-  { href: '/about/', label: 'About' },
-  { href: '/index/', label: 'Index' },
+  { href: '/buy/', label: 'Buy' },
+  { href: '/calculator/', label: 'Calculator' },
+  { href: '/sumcoin-vs-bitcoin/', label: 'SUM vs BTC' },
   { href: '/history/', label: 'History' },
+  { href: '/index/', label: 'Index' },
   { href: '/ecosystem/', label: 'Ecosystem' },
 ]
 
@@ -65,7 +67,7 @@ function PageFooter() {
   )
 }
 
-function PageShell({
+export function PageShell({
   eyebrow,
   title,
   lead,
@@ -104,7 +106,7 @@ function PageShell({
   )
 }
 
-function FeatureGrid({
+export function FeatureGrid({
   items,
 }: {
   items: Array<{
@@ -131,7 +133,7 @@ function FeatureGrid({
   )
 }
 
-function Section({
+export function Section({
   label,
   title,
   children,

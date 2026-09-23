@@ -1,0 +1,359 @@
+.live-market-strip {
+  display: grid;
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  margin:
+    0 0 92px;
+
+  border:
+    1px solid
+    var(--border);
+
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.035),
+      rgba(255,255,255,.012)
+    );
+}
+
+.live-market-strip > div {
+  min-width: 0;
+
+  padding: 26px;
+
+  border-right:
+    1px solid
+    var(--border);
+}
+
+.live-market-strip > div:last-child {
+  border-right: 0;
+}
+
+.live-market-strip span,
+.calculator-rate span,
+.btc-snapshot > span {
+  display: block;
+
+  color: var(--gold);
+
+  font-size: 9px;
+  font-weight: 850;
+
+  letter-spacing: .17em;
+}
+
+.live-market-strip strong {
+  display: block;
+
+  margin-top: 22px;
+
+  font-size:
+    clamp(
+      19px,
+      2.2vw,
+      27px
+    );
+
+  letter-spacing: -.035em;
+}
+
+.live-market-strip small {
+  display: block;
+
+  margin-top: 7px;
+
+  color: var(--muted);
+
+  font-size: 11px;
+}
+
+.calculator-panel {
+  margin:
+    0 0 92px;
+
+  padding: 34px;
+
+  border:
+    1px solid
+    var(--gold-border);
+
+  border-radius: 21px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(233,185,73,.10),
+      rgba(255,255,255,.018)
+    );
+}
+
+.calculator-rate strong {
+  display: block;
+
+  margin-top: 12px;
+
+  font-size:
+    clamp(
+      36px,
+      6vw,
+      62px
+    );
+
+  letter-spacing: -.055em;
+}
+
+.calculator-rate small {
+  color: var(--muted);
+}
+
+.calculator-fields {
+  display: grid;
+
+  grid-template-columns:
+    1fr auto 1fr;
+
+  align-items: end;
+
+  gap: 18px;
+
+  margin-top: 42px;
+}
+
+.calculator-fields label > span {
+  display: block;
+
+  margin-bottom: 9px;
+
+  color: var(--muted);
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: .13em;
+}
+
+.calculator-fields input,
+.calculator-output {
+  width: 100%;
+  min-height: 62px;
+
+  padding: 0 17px;
+
+  border:
+    1px solid
+    var(--border-strong);
+
+  border-radius: 12px;
+
+  color: var(--text);
+
+  background:
+    rgba(0,0,0,.24);
+
+  font-size: 22px;
+  font-weight: 750;
+}
+
+.calculator-output {
+  display: flex;
+  align-items: center;
+}
+
+.calculator-equals {
+  padding-bottom: 19px;
+
+  color: var(--gold);
+
+  font-size: 24px;
+}
+
+.calculator-note {
+  margin:
+    20px 0 0;
+
+  color: var(--muted);
+
+  font-size: 12px;
+}
+
+.btc-snapshot {
+  margin:
+    0 0 92px;
+
+  padding:
+    44px 36px;
+
+  border:
+    1px solid
+    var(--gold-border);
+
+  border-radius: 20px;
+
+  background:
+    radial-gradient(
+      circle at 100% 0,
+      rgba(233,185,73,.11),
+      transparent 42%
+    ),
+    rgba(255,255,255,.018);
+}
+
+.btc-snapshot strong {
+  display: block;
+
+  margin: 18px 0 8px;
+
+  font-size:
+    clamp(
+      35px,
+      6vw,
+      60px
+    );
+
+  letter-spacing: -.055em;
+}
+
+.btc-snapshot small {
+  color: var(--muted);
+}
+
+.buy-paths,
+.compare-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 16px;
+
+  margin-bottom: 92px;
+}
+
+.buy-path,
+.compare-card {
+  padding: 30px;
+
+  border:
+    1px solid
+    var(--border);
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.035),
+      rgba(255,255,255,.012)
+    );
+}
+
+.buy-path span {
+  display: inline-flex;
+
+  margin-bottom: 36px;
+
+  color: var(--gold);
+
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.buy-path h2,
+.compare-card h2 {
+  margin:
+    0 0 12px;
+
+  font-size: 22px;
+}
+
+.buy-path p,
+.compare-card p {
+  margin: 0;
+
+  color: var(--muted);
+
+  line-height: 1.72;
+}
+
+.buy-path a {
+  display: inline-block;
+
+  margin-top: 24px;
+
+  color: var(--gold);
+
+  text-decoration: none;
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.compare-card strong {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: var(--gold);
+
+  font-size: 10px;
+
+  letter-spacing: .14em;
+}
+
+@media (max-width: 900px) {
+  .live-market-strip {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+  .live-market-strip > div:nth-child(2) {
+    border-right: 0;
+  }
+
+  .live-market-strip > div:nth-child(-n+2) {
+    border-bottom:
+      1px solid
+      var(--border);
+  }
+
+  .buy-paths,
+  .compare-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .live-market-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .live-market-strip > div {
+    border-right: 0;
+    border-bottom:
+      1px solid
+      var(--border);
+  }
+
+  .live-market-strip > div:last-child {
+    border-bottom: 0;
+  }
+
+  .calculator-panel {
+    padding: 24px;
+  }
+
+  .calculator-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .calculator-equals {
+    padding: 0;
+  }
+}

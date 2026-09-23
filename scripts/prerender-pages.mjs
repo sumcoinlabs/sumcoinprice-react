@@ -71,6 +71,39 @@ const pages = [
     label:
       'Sumcoin Ecosystem',
   },
+  {
+    path: '/buy/',
+    directory: 'buy',
+    type: 'WebPage',
+    title:
+      'How to Buy Sumcoin (SUM) | Wallet & Acquisition Guide',
+    description:
+      'Learn how to get Sumcoin (SUM), check the live Sumcoin Index price, review official acquisition resources and move SUM to a self-custody wallet.',
+    label:
+      'How to Buy Sumcoin',
+  },
+  {
+    path: '/calculator/',
+    directory: 'calculator',
+    type: 'WebPage',
+    title:
+      'Sumcoin Calculator | Convert SUM to USD',
+    description:
+      'Use the live Sumcoin calculator to convert SUM to U.S. dollars using the current Sumcoin Index reference rate.',
+    label:
+      'Sumcoin Calculator',
+  },
+  {
+    path: '/sumcoin-vs-bitcoin/',
+    directory: 'sumcoin-vs-bitcoin',
+    type: 'WebPage',
+    title:
+      'Sumcoin vs Bitcoin | SUM/BTC Price & Comparison',
+    description:
+      'Compare Sumcoin and Bitcoin with the live SUM/BTC ratio, SUM Index price, historical performance and differences in price formation.',
+    label:
+      'Sumcoin vs Bitcoin',
+  },
 ]
 
 function escapeAttribute(value) {
