@@ -472,7 +472,7 @@ async function auditDist() {
     'Peer-to-peer missing from sitemap'
   )
 
-  const oldIndex =
+  const standardSitemap =
     await fs.readFile(
       path.join(
         root,
@@ -482,14 +482,38 @@ async function auditDist() {
       'utf8'
     )
 
+  const standardUrls =
+    [
+      ...standardSitemap.matchAll(
+        /<loc>([^<]+)<\/loc>/g
+      ),
+    ].map(
+      (match) =>
+        match[1]
+    )
+
   assert(
-    oldIndex.includes(
-      '<sitemapindex'
-    ) &&
-    oldIndex.includes(
-      'https://sumcoinprice.com/sitemaps.xml'
+    standardSitemap.includes(
+      '<urlset'
     ),
-    'Old sitemap compatibility index incorrect'
+    'sitemap.xml is not a URL set'
+  )
+
+  assert(
+    new Set(
+      standardUrls
+    ).size === 11,
+    `sitemap.xml has ${new Set(standardUrls).size} unique URLs`
+  )
+
+  assert(
+    [...new Set(urls)]
+      .sort()
+      .join('\n') ===
+    [...new Set(standardUrls)]
+      .sort()
+      .join('\n'),
+    'sitemap.xml and sitemaps.xml differ'
   )
 
   console.log(
@@ -497,7 +521,11 @@ async function auditDist() {
   )
 
   console.log(
-    'PASS sitemap.xml compatibility index'
+    'PASS sitemap.xml = 11 URLs'
+  )
+
+  console.log(
+    'PASS both sitemap files contain the same URLs'
   )
 }
 

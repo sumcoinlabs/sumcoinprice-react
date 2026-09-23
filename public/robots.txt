@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://sumcoinprice.com/sitemaps.xml
+Sitemap: https://sumcoinprice.com/sitemap.xml

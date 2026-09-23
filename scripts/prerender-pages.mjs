@@ -821,15 +821,23 @@ ${legacyUrls.map((url) => `  <url>
 </urlset>
 `
 
-await fs.writeFile(
-  path.join(
-    dist,
-    'sitemaps.xml'
-  ),
-  sitemap,
-  'utf8'
-)
+for (
+  const filename
+  of [
+    'sitemaps.xml',
+    'sitemap.xml',
+  ]
+) {
+  await fs.writeFile(
+    path.join(
+      dist,
+      filename
+    ),
+    sitemap,
+    'utf8'
+  )
+}
 
 console.log(
-  'Generated complete dist sitemap'
+  'Generated sitemap.xml and sitemaps.xml with complete URL sets'
 )
