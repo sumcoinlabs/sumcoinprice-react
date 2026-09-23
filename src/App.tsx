@@ -485,7 +485,7 @@ function App() {
       try {
         const response =
           await fetch(
-            `/app/api/history.php?range=${range}&pair=${pair}`,
+            `/api/history.php?range=${range}&pair=${pair}`,
             {
               cache: 'no-store',
             }
@@ -553,7 +553,7 @@ function App() {
               async (r) => {
                 const response =
                   await fetch(
-                    `/app/api/history.php?range=${r}&pair=${pair}`,
+                    `/api/history.php?range=${r}&pair=${pair}`,
                     {
                       cache: 'no-store',
                     }
@@ -1785,12 +1785,12 @@ function App() {
         <header className="site-header">
 
           <a
-            href="/app/"
+            href="/"
             className="brand"
           >
             <img
               className="coinmark"
-              src="/app/sumcoin-logo.png"
+              src="/sumcoin-logo.png"
               alt="Sumcoin"
             />
 
@@ -2687,7 +2687,7 @@ function App() {
 
               <div className="ecosystem-icon ecosystem-icon-wallet">
                 <img
-                  src="/app/sumcoin-wallet-logo.webp"
+                  src="/sumcoin-wallet-logo.webp"
                   alt="Sumcoin Wallet"
                 />
               </div>
@@ -3035,7 +3035,7 @@ function App() {
             </a>
 
             <a
-              href="/app/api/history.php?range=1d"
+              href="/api/history.php?range=1d"
               target="_blank"
               rel="noreferrer"
             >
@@ -3054,7 +3054,7 @@ function App() {
           <div className="footer-brand">
 
             <img
-              src="/app/sumcoin-logo.png"
+              src="/sumcoin-logo.png"
               alt="Sumcoin"
             />
 

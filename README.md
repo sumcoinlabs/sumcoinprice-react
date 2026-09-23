@@ -6,7 +6,7 @@
 
 ### Real-time and historical market intelligence for the Sumcoin Index
 
-[![Live](https://img.shields.io/badge/LIVE-sumcoinprice.com-22c55e?style=for-the-badge)](https://sumcoinprice.com/app/)
+[![Live](https://img.shields.io/badge/LIVE-sumcoinprice.com-22c55e?style=for-the-badge)](https://sumcoinprice.com/)
 [![Sumcoin](https://img.shields.io/badge/SUM-Sumcoin_Index-4285F4?style=for-the-badge)](https://sumcoin.org/)
 [![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -15,7 +15,7 @@
 
 **Price · History · Purchasing Power · Context**
 
-[Live Price](https://sumcoinprice.com/app/) ·
+[Live Price](https://sumcoinprice.com/) ·
 [Sumcoin](https://sumcoin.org/) ·
 [Wallet](https://sumcoinwallet.org/) ·
 [Explorer](https://sumexplorer.com/) ·
@@ -389,7 +389,7 @@ Vite generates the production application inside:
 
 The live application is available at:
 
-**https://sumcoinprice.com/app/**
+**https://sumcoinprice.com/**
 
 The frontend is built using:
 
@@ -447,7 +447,7 @@ That distinction is important to the Sumcoin model.
 | Resource | Link |
 |---|---|
 | **Sumcoin** | https://sumcoin.org/ |
-| **SumcoinPrice** | https://sumcoinprice.com/app/ |
+| **SumcoinPrice** | https://sumcoinprice.com/ |
 | **Sumcoin Wallet** | https://sumcoinwallet.org/ |
 | **SumExplorer** | https://sumexplorer.com/ |
 | **Sumcoin Marketplace** | https://sumcoinmarketplace.com/ |
@@ -499,7 +499,7 @@ The network, index, wallets, blockchain, merchants, buyers, sellers, and users c
 ### SUMCOIN
 
 [Website](https://sumcoin.org/) ·
-[Price](https://sumcoinprice.com/app/) ·
+[Price](https://sumcoinprice.com/) ·
 [Wallet](https://sumcoinwallet.org/) ·
 [Explorer](https://sumexplorer.com/) ·
 [Marketplace](https://sumcoinmarketplace.com/)

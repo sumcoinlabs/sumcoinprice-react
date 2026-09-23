@@ -264,7 +264,7 @@ export default function MarketSnapshot() {
             'ExchangeRateSpecification',
 
           '@id':
-            'https://sumcoinprice.com/app/#sum-usd-rate',
+            'https://sumcoinprice.com/#sum-usd-rate',
 
           name:
             'Sumcoin to U.S. Dollar Reference Rate',
@@ -294,7 +294,7 @@ export default function MarketSnapshot() {
             'Dataset',
 
           '@id':
-            'https://sumcoinprice.com/app/#live-market-data',
+            'https://sumcoinprice.com/#live-market-data',
 
           name:
             'Sumcoin Live Market Data',
@@ -303,7 +303,7 @@ export default function MarketSnapshot() {
             'Current Sumcoin index price, market capitalization, volume and supply information.',
 
           url:
-            'https://sumcoinprice.com/app/',
+            'https://sumcoinprice.com/',
 
           dateModified:
             market.updated_at,

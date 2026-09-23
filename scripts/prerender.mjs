@@ -122,7 +122,7 @@ if (market) {
           'ExchangeRateSpecification',
 
         '@id':
-          'https://sumcoinprice.com/app/#sum-usd-rate',
+          'https://sumcoinprice.com/#sum-usd-rate',
 
         name:
           'Sumcoin to U.S. Dollar Reference Rate',
@@ -149,7 +149,7 @@ if (market) {
           'Dataset',
 
         '@id':
-          'https://sumcoinprice.com/app/#live-market-data',
+          'https://sumcoinprice.com/#live-market-data',
 
         name:
           'Sumcoin Live Market Data',
@@ -158,7 +158,7 @@ if (market) {
           'Current Sumcoin index price, market capitalization, volume and supply information.',
 
         url:
-          'https://sumcoinprice.com/app/',
+          'https://sumcoinprice.com/',
 
         dateModified:
           market.updated_at,
@@ -312,7 +312,7 @@ const sitemap =
   </url>
 
   <url>
-    <loc>https://sumcoinprice.com/app/</loc>
+    <loc>https://sumcoinprice.com/</loc>
     <lastmod>${sitemapTimestamp}</lastmod>
     <changefreq>always</changefreq>
     <priority>1.0000</priority>
