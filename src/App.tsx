@@ -1865,6 +1865,17 @@ function App() {
 
 
 
+        <div className="homepage-intro">
+          <h1>
+            Live Sumcoin Price (SUM) &amp; Sumcoin Index
+          </h1>
+
+          <p>
+            Real-time SUM market data, historical price charts,
+            performance analysis and Sumcoin network context.
+          </p>
+        </div>
+
         <section className="market-card" id="price">
 
           <div className="market-head">
