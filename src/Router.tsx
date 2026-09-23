@@ -1,5 +1,11 @@
 import App from './App'
 import './App.css'
+import {
+  AboutPage,
+  IndexPage,
+  HistoryPage,
+  EcosystemPage,
+} from './ContentPages'
 
 type RouterProps = {
   pathname: string
@@ -90,6 +96,18 @@ export default function Router({
   switch (path) {
     case '/':
       return <App />
+
+    case '/about/':
+      return <AboutPage />
+
+    case '/index/':
+      return <IndexPage />
+
+    case '/history/':
+      return <HistoryPage />
+
+    case '/ecosystem/':
+      return <EcosystemPage />
 
     default:
       return <NotFound />
