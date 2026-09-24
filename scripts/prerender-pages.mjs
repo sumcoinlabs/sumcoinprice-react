@@ -457,6 +457,12 @@ for (const page of pages) {
       market
     )
 
+  const socialImage =
+    `https://sumcoinprice.com/social/${page.directory}.png`
+
+  const socialAlt =
+    `${page.label} page preview on SumcoinPrice`
+
   const pageId =
     `${url}#webpage`
 
@@ -751,6 +757,46 @@ for (const page of pages) {
       'name',
       'twitter:description',
       seo.description
+    )
+
+  output =
+    replaceMeta(
+      output,
+      'property',
+      'og:image',
+      socialImage
+    )
+
+  output =
+    replaceMeta(
+      output,
+      'property',
+      'og:image:secure_url',
+      socialImage
+    )
+
+  output =
+    replaceMeta(
+      output,
+      'property',
+      'og:image:alt',
+      socialAlt
+    )
+
+  output =
+    replaceMeta(
+      output,
+      'name',
+      'twitter:image',
+      socialImage
+    )
+
+  output =
+    replaceMeta(
+      output,
+      'name',
+      'twitter:image:alt',
+      socialAlt
     )
 
   output =

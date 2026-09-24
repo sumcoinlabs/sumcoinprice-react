@@ -5,12 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && node scripts/save-prerender-base.mjs && vite build --ssr src/entry-server.tsx --outDir dist-server && node scripts/prerender.mjs && node scripts/prerender-pages.mjs",
+    "build": "tsc -b && vite build && node scripts/save-prerender-base.mjs && vite build --ssr src/entry-server.tsx --outDir dist-server && node scripts/prerender.mjs && node scripts/prerender-pages.mjs && node scripts/generate-social-previews.mjs",
     "lint": "oxlint",
     "preview": "vite preview",
     "refresh-live": "node scripts/refresh-live.mjs",
     "audit": "node scripts/audit-site.mjs",
-    "audit:live": "node scripts/audit-site.mjs --live"
+    "audit:live": "node scripts/audit-site.mjs --live",
+    "social:generate": "node scripts/generate-social-previews.mjs",
+    "audit:social": "node scripts/audit-social-previews.mjs"
   },
   "dependencies": {
     "lightweight-charts": "^5.2.0",
