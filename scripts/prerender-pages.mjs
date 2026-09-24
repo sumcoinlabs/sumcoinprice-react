@@ -457,8 +457,11 @@ for (const page of pages) {
       market
     )
 
+  const socialVersion =
+    Date.now()
+
   const socialImage =
-    `https://sumcoinprice.com/social/${page.directory}.png`
+    `https://sumcoinprice.com/social/${page.directory}.png?v=${socialVersion}`
 
   const socialAlt =
     `${page.label} page preview on SumcoinPrice`

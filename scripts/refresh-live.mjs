@@ -80,6 +80,22 @@ execFileSync(
   }
 )
 
+/*
+ * Regenerate the actual-page social preview
+ * screenshots after the fresh market data has
+ * been rendered into the HTML.
+ */
+execFileSync(
+  process.execPath,
+  [
+    'scripts/generate-social-previews.mjs',
+  ],
+  {
+    cwd: root,
+    stdio: 'inherit',
+  }
+)
+
 console.log(
-  'Live Sumcoin SEO HTML refreshed'
+  'Live Sumcoin SEO HTML and social previews refreshed'
 )

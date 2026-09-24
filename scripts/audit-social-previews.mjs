@@ -56,20 +56,23 @@ function fail(message) {
   throw new Error(message)
 }
 
+function escapeRegex(value) {
+  return value.replace(
+    /[.*+?^${}()|[\]\\]/g,
+    '\\$&'
+  )
+}
+
 function getMeta(
   html,
   attribute,
   key
 ) {
-  const escaped =
-    key.replace(
-      /[.*+?^${}()|[\]\\]/g,
-      '\\$&'
-    )
-
   const regex =
     new RegExp(
-      `<meta\\b[^>]*${attribute}="${escaped}"[^>]*>`,
+      `<meta\\b[^>]*${attribute}="${escapeRegex(
+        key
+      )}"[^>]*>`,
       'i'
     )
 
@@ -132,42 +135,58 @@ for (
       'utf8'
     )
 
-  const expected =
+  const base =
     `https://sumcoinprice.com/social/${imageName}.png`
 
-  if (
+  const versioned =
+    new RegExp(
+      `^${escapeRegex(base)}\\?v=\\d+$`
+    )
+
+  const ogImage =
     getMeta(
       html,
       'property',
       'og:image'
-    ) !== expected
-  ) {
-    fail(
-      `${route}: incorrect og:image`
     )
-  }
 
-  if (
+  const secureImage =
     getMeta(
       html,
       'property',
       'og:image:secure_url'
-    ) !== expected
-  ) {
-    fail(
-      `${route}: incorrect og:image:secure_url`
     )
-  }
 
-  if (
+  const twitterImage =
     getMeta(
       html,
       'name',
       'twitter:image'
-    ) !== expected
+    )
+
+  if (
+    !versioned.test(
+      ogImage || ''
+    )
   ) {
     fail(
-      `${route}: incorrect twitter:image`
+      `${route}: og:image is not versioned: ${ogImage}`
+    )
+  }
+
+  if (
+    secureImage !== ogImage
+  ) {
+    fail(
+      `${route}: og:image:secure_url differs`
+    )
+  }
+
+  if (
+    twitterImage !== ogImage
+  ) {
+    fail(
+      `${route}: twitter:image differs`
     )
   }
 
@@ -179,7 +198,7 @@ for (
     ) !== '1200'
   ) {
     fail(
-      `${route}: bad width metadata`
+      `${route}: incorrect width metadata`
     )
   }
 
@@ -191,7 +210,7 @@ for (
     ) !== '630'
   ) {
     fail(
-      `${route}: bad height metadata`
+      `${route}: incorrect height metadata`
     )
   }
 
@@ -203,7 +222,7 @@ for (
     ) !== 'image/png'
   ) {
     fail(
-      `${route}: bad image type`
+      `${route}: incorrect image type`
     )
   }
 
@@ -215,7 +234,7 @@ for (
     )
   ) {
     fail(
-      `${route}: missing OG alt`
+      `${route}: missing OG image alt`
     )
   }
 
@@ -227,7 +246,7 @@ for (
     )
   ) {
     fail(
-      `${route}: missing Twitter alt`
+      `${route}: missing Twitter image alt`
     )
   }
 
@@ -256,7 +275,8 @@ for (
   }
 
   if (
-    image.length < 10000
+    image.length <
+      10000
   ) {
     fail(
       `${route}: screenshot suspiciously small`
@@ -271,7 +291,7 @@ for (
   )
 
   console.log(
-    `PASS ${route} -> ${imageName}.png (${Math.round(
+    `PASS ${route} -> ${ogImage} (${Math.round(
       image.length / 1024
     )} KB)`
   )
@@ -288,6 +308,10 @@ if (
 
 console.log(
   `PASS: ${hashes.size} distinct actual-page previews`
+)
+
+console.log(
+  'PASS: all social image URLs are cache-versioned'
 )
 
 console.log(

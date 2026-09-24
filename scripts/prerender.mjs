@@ -327,6 +327,12 @@ if (market) {
   const description =
     `Sumcoin (SUM) price today is ${displayPrice} USD. View the live Sumcoin Index, historical SUM charts, market cap, supply, volume and network data.`
 
+  const socialVersion =
+    Date.now()
+
+  const socialImage =
+    `https://sumcoinprice.com/social/home.png?v=${socialVersion}`
+
   output =
     replaceTitle(
       output,
@@ -370,6 +376,32 @@ if (market) {
         attribute,
         key,
         value
+      )
+  }
+
+  for (const [
+    attribute,
+    key,
+  ] of [
+    [
+      'property',
+      'og:image',
+    ],
+    [
+      'property',
+      'og:image:secure_url',
+    ],
+    [
+      'name',
+      'twitter:image',
+    ],
+  ]) {
+    output =
+      replaceMeta(
+        output,
+        attribute,
+        key,
+        socialImage
       )
   }
 
