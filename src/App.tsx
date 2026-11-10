@@ -81,6 +81,65 @@ type APIResponse = {
   data: Point[]
 }
 
+// Chronological history: binary search for nearest candle.
+function nearestHistoryPoint(
+  points: Point[],
+  time: number
+): Point | null {
+  if (!points.length) return null
+
+  let low = 0
+  let high = points.length - 1
+
+  while (low < high) {
+    const mid = Math.floor((low + high) / 2)
+    if (points[mid].time < time) low = mid + 1
+    else high = mid
+  }
+
+  const next = points[low]
+  const previous = low > 0 ? points[low - 1] : null
+
+  return previous &&
+    Math.abs(previous.time - time) <=
+    Math.abs(next.time - time)
+      ? previous
+      : next
+}
+
+// Ignore changing age_seconds when chart data is identical.
+function sameHistorySnapshot(
+  a: APIResponse,
+  b: APIResponse
+): boolean {
+  if (
+    a.pair !== b.pair ||
+    a.range !== b.range ||
+    a.resolution !== b.resolution ||
+    a.interval_seconds !== b.interval_seconds ||
+    a.count !== b.count ||
+    a.latest.time !== b.latest.time ||
+    a.latest.price !== b.latest.price ||
+    a.latest.stale !== b.latest.stale ||
+    JSON.stringify(a.period) !== JSON.stringify(b.period) ||
+    a.data.length !== b.data.length
+  ) return false
+
+  return a.data.every((p, i) => {
+    const q = b.data[i]
+    return (
+      p.time === q.time &&
+      p.price === q.price &&
+      p.open === q.open &&
+      p.high === q.high &&
+      p.low === q.low &&
+      p.close === q.close &&
+      p.samples === q.samples &&
+      p.gap_before === q.gap_before
+    )
+  })
+}
+
 type TrendPoint = {
   time: number
   price: number
@@ -476,10 +535,13 @@ function App() {
 
   useEffect(() => {
     let active = true
+    let inFlight = false
 
     async function load(
       showLoading = true
     ) {
+      if (document.hidden || inFlight) return
+      inFlight = true
       if (showLoading) {
         setLoading(true)
       }
@@ -511,7 +573,11 @@ function App() {
         }
 
         if (active) {
-          setResult(json)
+          setResult((previous) =>
+            previous && sameHistorySnapshot(previous, json)
+              ? previous
+              : json
+          )
         }
       } catch (err) {
         console.error(err)
@@ -522,6 +588,7 @@ function App() {
           )
         }
       } finally {
+        inFlight = false
         if (
           active &&
           showLoading
@@ -539,9 +606,20 @@ function App() {
         60000
       )
 
+    const onVisible = () => {
+      if (!document.hidden) void load(false)
+    }
+
+    document.addEventListener(
+      'visibilitychange', onVisible
+    )
+
     return () => {
       active = false
       window.clearInterval(timer)
+      document.removeEventListener(
+        'visibilitychange', onVisible
+      )
     }
   }, [range, pair])
 
@@ -1296,28 +1374,7 @@ function App() {
           Number(param.time)
 
         const nearest =
-          result.data.reduce(
-            (
-              best,
-              point
-            ) => {
-              if (!best) {
-                return point
-              }
-
-              return Math.abs(
-                point.time -
-                  time
-              ) <
-                Math.abs(
-                  best.time -
-                    time
-                )
-                ? point
-                : best
-            },
-            null as Point | null
-          )
+          nearestHistoryPoint(result.data, time)
 
         if (nearest) {
           setHoverPoint(
@@ -1412,13 +1469,15 @@ function App() {
     )
 
 
-    const redraw =
-      () => {
-        setTrendVersion(
-          (value) =>
-            value + 1
-        )
-      }
+    let redrawFrame = 0
+
+    const redraw = () => {
+      if (redrawFrame) return
+      redrawFrame = requestAnimationFrame(() => {
+        redrawFrame = 0
+        setTrendVersion((value) => value + 1)
+      })
+    }
 
 
     chart
@@ -1473,6 +1532,7 @@ function App() {
 
     return () => {
       resizeObserver.disconnect()
+      if (redrawFrame) cancelAnimationFrame(redrawFrame)
 
       try {
         chart.unsubscribeClick(

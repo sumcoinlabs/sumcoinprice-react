@@ -486,28 +486,30 @@ export default function ComparisonChart() {
         const timestamp =
           Number(param.time)
 
-        let closest =
-          result.data[0]
+        // Locate the nearest historical observation in O(log n).
+        let low = 0
+        let high = result.data.length - 1
 
-        for (
-          const point
-          of result.data
-        ) {
-
-          if (
-            Math.abs(
-              point.time -
-              timestamp
-            ) <
-            Math.abs(
-              closest.time -
-              timestamp
-            )
-          ) {
-            closest = point
+        while (low < high) {
+          const mid = Math.floor((low + high) / 2)
+          if (result.data[mid].time < timestamp) {
+            low = mid + 1
+          } else {
+            high = mid
           }
         }
 
+        let closest = result.data[low]
+
+        if (low > 0) {
+          const previous = result.data[low - 1]
+          if (
+            Math.abs(previous.time - timestamp) <=
+            Math.abs(closest.time - timestamp)
+          ) {
+            closest = previous
+          }
+        }
 
         setHover({
           date:
