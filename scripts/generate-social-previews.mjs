@@ -76,6 +76,14 @@ function runChrome(args) {
           chrome,
           args,
           {
+            // Put transient Chrome files inside the profile
+            // that is removed after screenshot generation.
+            env: {
+              ...process.env,
+              TMPDIR: chromeProfile,
+              TMP: chromeProfile,
+              TEMP: chromeProfile,
+            },
             stdio: [
               'ignore',
               'pipe',
@@ -212,6 +220,11 @@ if (
 const base =
   `http://127.0.0.1:${address.port}`
 
+const chromeProfile =
+  await fs.mkdtemp(
+    '/tmp/sumcoin-social-chrome-'
+  )
+
 try {
   for (
     const [route, name]
@@ -235,6 +248,11 @@ try {
       '--hide-scrollbars',
       '--no-first-run',
       '--no-default-browser-check',
+      `--user-data-dir=${chromeProfile}`,
+      `--disk-cache-dir=${path.join(
+        chromeProfile,
+        'cache'
+      )}`,
       '--force-device-scale-factor=1',
       '--window-size=1200,630',
       '--virtual-time-budget=2500',
@@ -259,6 +277,14 @@ try {
   }
 
 } finally {
+  await fs.rm(
+    chromeProfile,
+    {
+      recursive: true,
+      force: true,
+    }
+  )
+
   await new Promise(
     resolve =>
       server.close(resolve)
